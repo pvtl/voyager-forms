@@ -4,6 +4,10 @@ namespace Pvtl\VoyagerForms\Tests\Unit;
 
 class FormTest extends \Tests\TestCase
 {
+    public function testIfFormHasATitle()
+    {
+    }
+
     public function testIfFormHasInputsAssigned()
     {
     }
