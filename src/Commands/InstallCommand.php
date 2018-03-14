@@ -58,6 +58,12 @@ class InstallCommand extends Command
         $process = new Process($composer . ' dump-autoload');
         $process->setWorkingDirectory(base_path())->mustRun();
 
+        $this->info('Migrating the database tables into your application');
+        $this->call('migrate');
+
+        $this->info('Seeding data into the database');
+        $this->call('db:seed', ['--class' => 'FormsTableSeeder']);
+
         $this->info('Successfully installed Voyager Forms! Enjoy');
     }
 }
