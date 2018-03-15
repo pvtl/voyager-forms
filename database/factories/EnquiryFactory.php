@@ -13,5 +13,6 @@ $factory->define(\Pvtl\VoyagerForms\FormEnquiry::class, function (Faker $faker) 
         ]),
         'mailto' => $faker->safeEmail,
         'hook' => $faker->url,
+        'ip_address' => $faker->ipv4,
     ];
 });

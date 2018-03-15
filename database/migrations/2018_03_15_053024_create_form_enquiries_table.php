@@ -18,6 +18,7 @@ class CreateFormEnquiriesTable extends Migration
             $table->integer('form_id');
             $table->mediumText('data');
             $table->mediumText('mailto');
+            $table->string('ip_address');
             $table->timestamps();
         });
     }
