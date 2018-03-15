@@ -62,7 +62,6 @@ class InstallCommand extends Command
         $this->call('migrate');
 
         $this->info('Seeding data into the database');
-        $this->call('db:seed', ['--class' => 'Pvtl\VoyagerForms\Database\Seeds\FormsTableSeeder']);
         $this->call('db:seed', ['--class' => 'Pvtl\VoyagerForms\Database\Seeds\SettingsTableSeeder']);
 
         $this->info('Successfully installed Voyager Forms! Enjoy');
