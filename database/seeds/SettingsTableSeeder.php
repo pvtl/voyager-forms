@@ -2,7 +2,7 @@
 
 namespace Pvtl\VoyagerForms\Database\Seeds;
 
-use \Illuminate\Database\Seeder;
+use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Setting;
 
 class SettingsTableSeeder extends Seeder
