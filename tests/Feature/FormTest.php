@@ -2,8 +2,22 @@
 
 namespace Pvtl\VoyagerForms\Tests\Feature;
 
-class FormTest extends \Tests\TestCase
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
+class FormTest extends TestCase
 {
+    use DatabaseMigrations;
+
+    protected $form;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->form = create('Pvtl\VoyagerForms\Form');
+    }
+
     public function testIfFormRendersShortcodeToTheFrontend()
     {
     }
