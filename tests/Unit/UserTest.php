@@ -2,12 +2,16 @@
 
 namespace Pvtl\VoyagerForms\Tests\Unit;
 
+use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Pvtl\VoyagerForms\Form;
+use Pvtl\VoyagerForms\FormInput;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Pvtl\VoyagerForms\Tests\Utilities\FactoryUtilities;
 
 class UserTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $form;
 
@@ -15,11 +19,30 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
-        $this->form = create('Pvtl\VoyagerForms\Form');
+        \Pvtl\VoyagerForms\Tests\Unit\FormTest::createForm();
     }
 
-    public function testIfOnlyASuperUserCanSelectAFormView()
+    public function testIfSuperUserCanSelectAFormView()
     {
+        $user = factory(User::class)->make([
+            'role_id' => 1,
+        ]);
 
+        return $this->actingAs($user)
+            ->get('/admin/forms')
+            ->assertStatus('200')
+            ->assertSee('name="form_view"');
+    }
+
+    public function testIfAdminUserCanSelectAFormView()
+    {
+        $user = factory(User::class)->make([
+            'role_id' => 1,
+        ]);
+
+        return $this->actingAs($user)
+            ->get('/admin/forms')
+            ->assertStatus('200')
+            ->assertDontSee('name="form_view"');
     }
 }

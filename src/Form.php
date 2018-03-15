@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Form extends Model
 {
-    public function formInputs()
+    public function inputs()
     {
         return $this->hasMany(FormInput::class);
     }

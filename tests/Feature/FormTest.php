@@ -3,30 +3,34 @@
 namespace Pvtl\VoyagerForms\Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Pvtl\VoyagerForms\Form;
+use Pvtl\VoyagerFrontend\Page;
+use Pvtl\VoyagerForms\FormInput;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Pvtl\VoyagerForms\Tests\Utilities\FactoryUtilities;
 
 class FormTest extends TestCase
 {
-    use DatabaseMigrations;
-
-    protected $form;
+    use RefreshDatabase;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->form = create('Pvtl\VoyagerForms\Form');
+        \Pvtl\VoyagerForms\Tests\Unit\FormTest::createForm();
+
+        factory(Page::class)->make([
+            'slug' => 'contact',
+            'title' => 'Contact Us',
+            'body' => Form::inRandomOrder()->get()->first()->shortcode,
+        ]);
     }
 
     public function testIfFormRendersShortcodeToTheFrontend()
     {
-    }
+        $response = $this->get('/contact');
 
-    public function testIfFormSubmitsInputFieldsCorrectly()
-    {
-    }
-
-    public function testIfFormSubmissionCreatesAnEnquiry()
-    {
+        return $response->assertStatus(200)
+            ->assertSee('My Form');
     }
 }
