@@ -4,7 +4,7 @@ namespace Pvtl\VoyagerForms;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Form extends Model
+class FormEnquiry extends Model
 {
     public function form()
     {
