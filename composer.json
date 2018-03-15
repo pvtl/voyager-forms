@@ -27,7 +27,8 @@
   "autoload": {
     "classmap": [],
     "psr-4": {
-      "Pvtl\\VoyagerForms\\": "src/"
+      "Pvtl\\VoyagerForms\\": "src/",
+      "Pvtl\\VoyagerForms\\Database\\": "database/"
     }
   },
   "autoload-dev": {
