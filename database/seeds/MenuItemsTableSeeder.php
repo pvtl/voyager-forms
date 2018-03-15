@@ -29,6 +29,19 @@ class MenuItemsTableSeeder extends Seeder
             ])->save();
         }
 
+        $formManagementMenuItem = MenuItem::firstOrNew(['title' => 'Form Management']);
+
+        if (!$formManagementMenuItem->exists) {
+            $formManagementMenuItem->fill([
+                'menu_id' => $menu->id,
+                'parent_id' => $formsMenuItem->id,
+                'url'     => '',
+                'icon_class' => 'voyager-documentation',
+                'order'   => 1,
+                'route' => 'voyager-forms.forms.index',
+            ])->save();
+        }
+
         $enquiriesMenuItem = MenuItem::firstOrNew(['route' => 'voyager-forms.enquiries.index']);
 
         if (!$enquiriesMenuItem->exists) {
@@ -38,7 +51,7 @@ class MenuItemsTableSeeder extends Seeder
                 'parent_id' => $formsMenuItem->id,
                 'url'     => '',
                 'icon_class' => 'voyager-mail',
-                'order'   => 1,
+                'order'   => 2,
             ])->save();
         }
     }
