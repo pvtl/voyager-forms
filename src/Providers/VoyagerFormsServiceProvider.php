@@ -40,6 +40,7 @@ class VoyagerFormsServiceProvider extends ServiceProvider
      */
     protected function strapRoutes()
     {
+        $this->loadRoutesFrom(self::PACKAGE_DIR . 'routes/web.php');
     }
 
     /**
