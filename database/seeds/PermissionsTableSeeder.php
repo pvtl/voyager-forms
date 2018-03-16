@@ -14,6 +14,7 @@ class PermissionsTableSeeder extends Seeder
         'read_forms',
         'edit_forms',
         'add_forms',
+        'delete_forms',
     ];
 
     protected $enquiriesPermissions = [
@@ -21,6 +22,7 @@ class PermissionsTableSeeder extends Seeder
         'read_enquiries',
         'edit_enquiries',
         'add_enquiries',
+        'delete_enquiries',
     ];
 
     /**
