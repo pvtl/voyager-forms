@@ -17,7 +17,7 @@ class MenuItemsTableSeeder extends Seeder
     public function run()
     {
         $menu = Menu::where('name', 'admin')->first();
-        $formsMenuItem = MenuItem::firstOrNew(['route' => 'voyager-forms.forms.index']);
+        $formsMenuItem = MenuItem::firstOrNew(['route' => 'voyager.forms.index']);
 
         if (!$formsMenuItem->exists) {
             $formsMenuItem->fill([
@@ -38,11 +38,11 @@ class MenuItemsTableSeeder extends Seeder
                 'url'     => '',
                 'icon_class' => 'voyager-documentation',
                 'order'   => 1,
-                'route' => 'voyager-forms.forms.index',
+                'route' => 'voyager.forms.index',
             ])->save();
         }
 
-        $enquiriesMenuItem = MenuItem::firstOrNew(['route' => 'voyager-forms.enquiries.index']);
+        $enquiriesMenuItem = MenuItem::firstOrNew(['route' => 'voyager.enquiries.index']);
 
         if (!$enquiriesMenuItem->exists) {
             $enquiriesMenuItem->fill([
