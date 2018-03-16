@@ -4,6 +4,7 @@ namespace Pvtl\VoyagerForms\Http\Controllers;
 
 use Pvtl\VoyagerForms\Form;
 use Illuminate\Http\Request;
+use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class FormController extends BaseVoyagerBreadController
@@ -14,7 +15,7 @@ class FormController extends BaseVoyagerBreadController
      */
     public function index(Request $request)
     {
-        //
+        Voyager::canOrFail('browse_forms');
     }
 
 
@@ -24,7 +25,7 @@ class FormController extends BaseVoyagerBreadController
      */
     public function create(Request $request)
     {
-        //
+        Voyager::canOrFail('add_forms');
     }
 
 
@@ -34,7 +35,7 @@ class FormController extends BaseVoyagerBreadController
      */
     public function store(Request $request)
     {
-        //
+        Voyager::canOrFail('add_forms');
     }
 
 
@@ -45,7 +46,7 @@ class FormController extends BaseVoyagerBreadController
      */
     public function show(Request $request, $id)
     {
-        //
+        Voyager::canOrFail('read_forms');
     }
 
 
@@ -56,7 +57,7 @@ class FormController extends BaseVoyagerBreadController
      */
     public function edit(Request $request, $id)
     {
-        //
+        Voyager::canOrFail('edit_forms');
     }
 
 
@@ -67,7 +68,7 @@ class FormController extends BaseVoyagerBreadController
      */
     public function update(Request $request, $id)
     {
-        //
+        Voyager::canOrFail('edit_forms');
     }
 
 
@@ -78,6 +79,6 @@ class FormController extends BaseVoyagerBreadController
      */
     public function destroy(Request $request, $id)
     {
-        //
+        Voyager::canOrFail('delete_forms');
     }
 }
