@@ -11,13 +11,21 @@ class FormController extends BaseVoyagerBreadController
 {
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
         Voyager::canOrFail('browse_forms');
-    }
 
+        $forms = Form::all();
+
+        return view('voyager-forms::forms.index', [
+            'dataType' => Voyager::model('DataType')
+                ->where('slug', '=', $this->getSlug($request))
+                ->first(),
+            'forms' => $forms,
+        ]);
+    }
 
     /**
      * @param Request $request
@@ -26,59 +34,93 @@ class FormController extends BaseVoyagerBreadController
     public function create(Request $request)
     {
         Voyager::canOrFail('add_forms');
-    }
 
+        return view('voyager-forms::forms.edit-add', [
+            'dataType' => Voyager::model('DataType')
+                ->where('slug', '=', $this->getSlug($request))
+                ->first(),
+        ]);
+    }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
         Voyager::canOrFail('add_forms');
-    }
 
+        $enquiry = Form::create([]);
+
+        return redirect('voyager-forms::forms.index')->with([
+            'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
+            'alert-type' => 'success',
+        ]);
+    }
 
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
     {
         Voyager::canOrFail('read_forms');
-    }
 
+        $form = Form::findOrFail($id);
+
+        return view('voyager-forms::forms.edit-add', [
+            'form' => $form,
+        ]);
+    }
 
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
     {
         Voyager::canOrFail('edit_forms');
-    }
 
+        $form = Form::findOrFail($id);
+
+        return view('voyager-forms::forms.edit-add', [
+            'form' => $form,
+        ]);
+    }
 
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
         Voyager::canOrFail('edit_forms');
-    }
 
+        return redirect('voyager-forms::forms.index')->with([
+            'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
+            'alert-type' => 'success',
+        ]);
+    }
 
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Request $request, $id)
     {
         Voyager::canOrFail('delete_forms');
+
+        $form = Form::findOrFail($id);
+        $form->delete();
+
+        return redirect('voyager-forms::forms.index')
+            ->with([
+                'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
+                'alert-type' => 'success',
+            ]);
     }
 }
