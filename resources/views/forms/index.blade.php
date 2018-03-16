@@ -41,9 +41,9 @@
                                 <tr>
                                     <td>{{ $form->id }}</td>
                                     <td>{{ $form->title }}</td>
-                                    <td>{{ $form->view }}</td>
+                                    <td>{{ $form->view or 'None' }}</td>
                                     <td>{{ $form->mailto }}</td>
-                                    <td>{{ $form->hook }}</td>
+                                    <td>{{ $form->hook or 'None' }}</td>
                                     <td>{{ $form->created_at }}</td>
                                     <td>{{ $form->updated_at }}</td>
                                 </tr>
