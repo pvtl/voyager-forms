@@ -4,10 +4,10 @@
  * Admin Route/s
  */
 Route::group([
-    'as' => 'voyager.forms.',
     'prefix' => 'admin',
-    'middleware' => ['web', 'admin.user']
+    'middleware' => ['web', 'admin.user'],
+    ['namespace' => 'Pvtl\VoyagerForms\Http\Controllers']
 ], function () {
-    Route::resource('/forms', '\Pvtl\VoyagerForms\Http\Controllers\FormController');
-    Route::resource('/enquiries', '\Pvtl\VoyagerForms\Http\Controllers\EnquiryController');
+    Route::resource('forms', 'FormController');
+    Route::resource('enquiries', 'EnquiryController');
 });
