@@ -50,9 +50,15 @@ class FormController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('add_forms');
 
-        $enquiry = Form::create([]);
+        $dataType = Voyager::model('DataType')
+            ->where('slug', '=', $this->getSlug($request))
+            ->first();
 
-        return redirect('voyager-forms::forms.index')->with([
+        Form::create($request->all())->save();
+
+        return redirect()
+            ->back()
+            ->with([
             'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
             'alert-type' => 'success',
         ]);
@@ -99,7 +105,13 @@ class FormController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('edit_forms');
 
-        return redirect('voyager-forms::forms.index')->with([
+        $dataType = Voyager::model('DataType')
+            ->where('slug', '=', $this->getSlug($request))
+            ->first();
+
+        return redirect()
+            ->back()
+            ->with([
             'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
             'alert-type' => 'success',
         ]);
@@ -114,10 +126,15 @@ class FormController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('delete_forms');
 
+        $dataType = Voyager::model('DataType')
+            ->where('slug', '=', $this->getSlug($request))
+            ->first();
+
         $form = Form::findOrFail($id);
         $form->delete();
 
-        return redirect('voyager-forms::forms.index')
+        return redirect()
+            ->back()
             ->with([
                 'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',

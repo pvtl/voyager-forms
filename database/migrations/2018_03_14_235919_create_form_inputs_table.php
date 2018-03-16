@@ -17,7 +17,7 @@ class CreateFormInputsTable extends Migration
             $table->increments('id');
             $table->integer('form_id');
             $table->string('label');
-            $table->string('class');
+            $table->string('class')->nullable()->default('');
             $table->enum('type', ['text', 'number', 'email', 'text_area', 'checkbox', 'select', 'radio']);
             $table->boolean('required');
             $table->timestamps();

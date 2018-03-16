@@ -16,9 +16,9 @@ class CreateFormsTable extends Migration
         Schema::create('forms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('view');
+            $table->string('view')->nullable()->default('');
             $table->mediumText('mailto');
-            $table->string('hook');
+            $table->string('hook')->nullable()->default('');
             $table->timestamps();
         });
     }

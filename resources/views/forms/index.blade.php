@@ -23,9 +23,33 @@
                         No forms found, try adding one.
                     @endif
 
-                    @foreach ($forms as $form)
-                        This will print out our forms.
-                    @endforeach
+                    <div class="table-responsive">
+                        <table id="dataTable" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Title</td>
+                                <td>View</td>
+                                <td>Mail To</td>
+                                <td>Hook</td>
+                                <td>Created At</td>
+                                <td>Updated At</td>
+                            </tr>
+                            </thead>
+
+                            @foreach ($forms as $form)
+                                <tr>
+                                    <td>{{ $form->id }}</td>
+                                    <td>{{ $form->title }}</td>
+                                    <td>{{ $form->view }}</td>
+                                    <td>{{ $form->mailto }}</td>
+                                    <td>{{ $form->hook }}</td>
+                                    <td>{{ $form->created_at }}</td>
+                                    <td>{{ $form->updated_at }}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
