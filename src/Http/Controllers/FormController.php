@@ -92,6 +92,9 @@ class FormController extends BaseVoyagerBreadController
         $form = Form::findOrFail($id);
 
         return view('voyager-forms::forms.edit-add', [
+            'dataType' => Voyager::model('DataType')
+                ->where('slug', '=', $this->getSlug($request))
+                ->first(),
             'form' => $form,
         ]);
     }

@@ -1,6 +1,6 @@
 @extends('voyager::master')
 
-@section('page_title', __('voyager.generic.'.(isset($dataTypeContent->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular)
+@section('page_title', __('voyager.generic.'.(isset($dataType->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular)
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -9,7 +9,7 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="{{ $dataType->icon }}"></i>
-        {{ __('voyager.generic.'.(isset($dataTypeContent->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular }}
+        {{ __('voyager.generic.'.(isset($dataType->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular }}
     </h1>
 @stop
 
@@ -18,8 +18,8 @@
         @include('voyager::alerts')
         <form
             role="form"
-            action="@if (isset($dataTypeContent->id))
-            {{ route('voyager.'.$dataType->slug.'.update', $dataTypeContent->id) }}
+            action="@if (isset($dataType->id))
+            {{ route('voyager.'.$dataType->slug.'.update', $dataType->id) }}
             @else
             {{ route('voyager.'.$dataType->slug.'.store') }}
             @endif"
@@ -28,7 +28,7 @@
 
             {{ csrf_field() }}
 
-            @if(isset($dataTypeContent->id))
+            @if(isset($dataType->id))
                 {{ method_field("PUT") }}
             @endif
 
@@ -47,16 +47,16 @@
                         @endif
 
                         <label for="title">Title</label><br>
-                        <input name="title" class="form-control" type="text" required>
+                        <input name="title" class="form-control" type="text" @if ($form->title) value="{{ $form->title }}" @endif required>
 
                         <label for="view">View</label><br>
-                        <input name="view" class="form-control" type="text">
+                        <input name="view" class="form-control" type="text" @if ($form->view) value="{{ $form->view }}" @endif>
 
                         <label for="mailto">Mail To (Separate multiple with ',')</label><br>
-                        <input name="mailto" class="form-control" type="text" required>
+                        <input name="mailto" class="form-control" type="text" @if ($form->mailto) value="{{ $form->mailto }}" @endif required>
 
                         <label for="hook">Event Hook (Fires after form is submitted)</label><br>
-                        <input name="hook" class="form-control" type="text">
+                        <input name="hook" class="form-control" type="text" @if ($form->hook) value="{{ $form->hook }}" @endif>
                     </div>
 
                     <div class="panel-footer">
