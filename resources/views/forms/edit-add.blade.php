@@ -17,7 +17,6 @@
     <div class="page-content container-fluid">
         @include('voyager::alerts')
         <form
-            class="form-edit-add"
             role="form"
             action="@if (isset($dataTypeContent->id))
             {{ route('voyager.'.$dataType->slug.'.update', $dataTypeContent->id) }}
