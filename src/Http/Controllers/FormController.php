@@ -54,7 +54,7 @@ class FormController extends BaseVoyagerBreadController
             ->where('slug', '=', $this->getSlug($request))
             ->first();
 
-        Form::create($request->all())->save();
+        Form::create($request->all());
 
         return redirect()
             ->back()
@@ -113,7 +113,15 @@ class FormController extends BaseVoyagerBreadController
             ->first();
 
         $form = Form::findOrFail($id);
-        $form->fill($request->all())->save();
+
+        // Do not update Form, instead attach Form Input
+        if ($request->input('form_id')) {
+            $form->inputs()->create($request->all());
+        } else {
+            $form->fill($request->all());
+        }
+
+        $form->save();
 
         return redirect()
             ->back()
