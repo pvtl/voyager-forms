@@ -59,9 +59,9 @@ class FormController extends BaseVoyagerBreadController
         return redirect()
             ->route('voyager.forms.index')
             ->with([
-            'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
-            'alert-type' => 'success',
-        ]);
+                'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
+                'alert-type' => 'success',
+            ]);
     }
 
     /**
@@ -114,21 +114,14 @@ class FormController extends BaseVoyagerBreadController
 
         $form = Form::findOrFail($id);
 
-        // Do not update Form, instead attach Form Input
-        if ($request->input('form_id')) {
-            $form->inputs()->create($request->all());
-        } else {
-            $form->fill($request->all());
-        }
-
-        $form->save();
+        $form->fill($request->all())->save();
 
         return redirect()
             ->back()
             ->with([
-            'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
-            'alert-type' => 'success',
-        ]);
+                'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
+                'alert-type' => 'success',
+            ]);
     }
 
     /**

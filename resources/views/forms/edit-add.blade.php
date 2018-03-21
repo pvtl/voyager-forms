@@ -30,7 +30,7 @@
                         </div> <!-- /.panel-heading -->
 
                         <div class="panel-body">
-                            <form role="form" action="{{ route('voyager.forms.update', $form->id) }}" method="POST"
+                            <form role="form" action="{{ route('voyager.inputs.update', $form->id) }}" method="POST"
                                   enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
@@ -143,6 +143,40 @@
                             <button type="submit" class="btn btn-primary">{{ __('voyager.generic.submit') }}</button>
                         </div>
                     </form>
+
+                    @foreach ($form->inputs as $input)
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ ucfirst($input->type) }} Input</h3>
+                            <div class="panel-actions">
+                                <a class="panel-collapse-icon voyager-angle-down" data-toggle="block-collapse"
+                                   aria-hidden="true"></a>
+                            </div> <!-- /.panel-actions -->
+                        </div> <!-- /.panel-heading -->
+
+                        <div class="panel-body">
+                            <form role="form" action="{{ route('voyager.inputs.update', $input->id) }}" method="POST"
+                                  enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                {{ method_field("PUT") }}
+
+                                <div class="form-group">
+                                    <label for="label">Input Label</label>
+                                    <input name="label" class="form-control" id="label" type="{{ $input->label }}">
+
+                                    <label for="class">Input Class</label>
+                                    <input name="class" class="form-control" id="class" type="{{ $input->class }}">
+
+                                    <label for="required">Input Required</label>
+                                    <input name="required" class="form-control" id="required"
+                                           type="{{ $input->required }}">
+                                </div> <!-- /.form-group -->
+
+                                <input type="hidden" name="input_id" value="{{ $input->id }}"/>
+                                <button type="submit"
+                                        class="btn btn-success btn-sm">{{ __('Update This Input') }}</button>
+                            </form>
+                        </div> <!-- /.panel-body -->
+                    @endforeach
                 </div>
             </div>
         </div>
