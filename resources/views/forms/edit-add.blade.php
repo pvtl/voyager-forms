@@ -1,6 +1,6 @@
 @extends('voyager::master')
 
-@section('page_title', __('voyager.generic.'.(isset($dataType->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular)
+@section('page_title', __('voyager.generic.'.(isset($form->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular)
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -9,7 +9,7 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="{{ $dataType->icon }}"></i>
-        {{ __('voyager.generic.'.(isset($dataType->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular }}
+        {{ __('voyager.generic.'.(isset($form->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular }}
     </h1>
 @stop
 
@@ -18,8 +18,8 @@
         @include('voyager::alerts')
         <form
             role="form"
-            action="@if (isset($dataType->id))
-            {{ route('voyager.'.$dataType->slug.'.update', $dataType->id) }}
+            action="@if (isset($form->id))
+            {{ route('voyager.'.$dataType->slug.'.update', $form->id) }}
             @else
             {{ route('voyager.'.$dataType->slug.'.store') }}
             @endif"
@@ -28,7 +28,7 @@
 
             {{ csrf_field() }}
 
-            @if(isset($dataType->id))
+            @if(isset($form->id))
                 {{ method_field("PUT") }}
             @endif
 

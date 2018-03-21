@@ -112,6 +112,9 @@ class FormController extends BaseVoyagerBreadController
             ->where('slug', '=', $this->getSlug($request))
             ->first();
 
+        $form = Form::findOrFail($id);
+        $form->fill($request->all())->save();
+
         return redirect()
             ->back()
             ->with([
