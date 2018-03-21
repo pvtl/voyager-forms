@@ -32,9 +32,9 @@ class InputController extends BaseVoyagerBreadController
      */
     public function store(Request $request)
     {
-        Voyager::canOrFail('add_forms');
+        Voyager::canOrFail('add_inputs');
 
-        $form = Form::findOrFail($request->id);
+        $form = Form::findOrFail($request->input('form_id'));
 
         $form->inputs()->create($request->all())->save();
 
@@ -71,6 +71,8 @@ class InputController extends BaseVoyagerBreadController
      */
     public function update(Request $request, $id)
     {
+        Voyager::canOrFail('edit_inputs');
+
         $formInput = FormInput::findOrFail($id);
 
         $formInput->fill($request->all())->save();
@@ -90,7 +92,7 @@ class InputController extends BaseVoyagerBreadController
      */
     public function destroy(Request $request, $id)
     {
-        Voyager::canOrFail('delete_forms');
+        Voyager::canOrFail('delete_inputs');
 
         $formInput = FormInput::findOrFail($id);
 

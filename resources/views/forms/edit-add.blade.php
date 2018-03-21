@@ -30,13 +30,9 @@
                         </div> <!-- /.panel-heading -->
 
                         <div class="panel-body">
-                            <form role="form" action="{{ route('voyager.inputs.update', $form->id) }}" method="POST"
+                            <form role="form" action="{{ route('voyager.inputs.store') }}" method="POST"
                                   enctype="multipart/form-data">
                                 {{ csrf_field() }}
-
-                                @if (isset($form->id))
-                                    {{ method_field("PUT") }}
-                                @endif
 
                                 <div class="form-group">
                                     <label for="type">Field Type</label>
