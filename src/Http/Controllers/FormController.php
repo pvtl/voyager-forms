@@ -57,7 +57,7 @@ class FormController extends BaseVoyagerBreadController
         Form::create($request->all());
 
         return redirect()
-            ->back()
+            ->route('voyager.forms.index')
             ->with([
             'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
             'alert-type' => 'success',
@@ -148,7 +148,7 @@ class FormController extends BaseVoyagerBreadController
         $form->delete();
 
         return redirect()
-            ->back()
+            ->route('voyager.forms.index')
             ->with([
                 'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
