@@ -17,6 +17,14 @@ class PermissionsTableSeeder extends Seeder
         'delete_forms',
     ];
 
+    protected $inputsPermissions = [
+        'browse_inputs',
+        'read_inputs',
+        'edit_inputs',
+        'add_inputs',
+        'delete_inputs',
+    ];
+
     protected $enquiriesPermissions = [
         'browse_enquiries',
         'read_enquiries',
@@ -33,6 +41,7 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         $this->generatePermissions($this->formsPermissions, 'forms');
+        $this->generatePermissions($this->inputsPermissions, 'form_inputs');
         $this->generatePermissions($this->enquiriesPermissions, 'form_enquiries');
     }
 

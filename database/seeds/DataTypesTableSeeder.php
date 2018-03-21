@@ -28,6 +28,20 @@ class DataTypesTableSeeder extends Seeder
             ])->save();
         }
 
+        $inputDataType = DataType::firstOrNew([ 'model_name' => '\Pvtl\VoyagerForms\FormInput']);
+
+        if (!$inputDataType->exists) {
+            $inputDataType->fill([
+                'name' => 'inputs',
+                'slug' => 'inputs',
+                'display_name_singular' => 'Input',
+                'display_name_plural' => 'Inputs',
+                'icon' => 'voyager-documentation',
+                'controller' => '\Pvtl\VoyagerForms\Http\Controllers\InputController',
+                'generate_permissions' => '1',
+            ])->save();
+        }
+
         $enquiryDataType = DataType::firstOrNew([ 'model_name' => '\Pvtl\VoyagerForms\Enquiry']);
 
         if (!$enquiryDataType->exists) {
