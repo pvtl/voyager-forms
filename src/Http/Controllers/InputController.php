@@ -8,7 +8,7 @@ use Pvtl\VoyagerForms\FormInput;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
-class FormInputController extends BaseVoyagerBreadController
+class InputController extends BaseVoyagerBreadController
 {
     /**
      * @param Request $request
