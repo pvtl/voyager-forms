@@ -159,14 +159,14 @@
 
                                     <div class="form-group">
                                         <label for="label">Input Label</label>
-                                        <input name="label" class="form-control" id="label" type="{{ $input->label }}">
+                                        <input name="label" class="form-control" id="label" value="{{ $input->label }}">
 
                                         <label for="class">Input Class</label>
-                                        <input name="class" class="form-control" id="class" type="{{ $input->class }}">
+                                        <input name="class" class="form-control" id="class" value="{{ $input->class }}">
 
                                         <label for="required">Input Required</label>
                                         <input name="required" class="form-control" id="required"
-                                               type="{{ $input->required }}">
+                                               value="{{ $input->required }}">
                                     </div> <!-- /.form-group -->
 
                                     <input type="hidden" name="input_id" value="{{ $input->id }}"/>
