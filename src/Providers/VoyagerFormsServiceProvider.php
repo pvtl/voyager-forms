@@ -2,8 +2,11 @@
 
 namespace Pvtl\VoyagerForms\Providers;
 
-use Pvtl\VoyagerForms\Commands;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Pvtl\VoyagerForms\Forms;
+use Pvtl\VoyagerForms\Commands;
+use Pvtl\VoyagerForms\Facades\Forms as FormsFacade;
 
 class VoyagerFormsServiceProvider extends ServiceProvider
 {
@@ -22,6 +25,7 @@ class VoyagerFormsServiceProvider extends ServiceProvider
         $this->strapRoutes();
         $this->strapPublishers();
         $this->strapViews();
+        $this->strapHelpers();
         $this->strapMigrations();
         $this->strapCommands();
     }
@@ -56,6 +60,16 @@ class VoyagerFormsServiceProvider extends ServiceProvider
     protected function strapViews()
     {
         $this->loadViewsFrom(self::PACKAGE_DIR . 'resources/views', 'voyager-forms');
+    }
+
+    /**
+     * Load helpers.
+     */
+    protected function strapHelpers()
+    {
+        foreach (glob(self::PACKAGE_DIR . '/src/Helpers/*.php') as $filename) {
+            require_once $filename;
+        }
     }
 
     /**
