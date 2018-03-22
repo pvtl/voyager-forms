@@ -3,12 +3,15 @@
 namespace Pvtl\VoyagerForms\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Pvtl\VoyagerForms\Traits\DataType;
 use TCG\Voyager\Facades\Voyager;
 use Pvtl\VoyagerForms\FormEnquiry;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class EnquiryController extends BaseVoyagerBreadController
 {
+    use DataType;
+
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -20,9 +23,7 @@ class EnquiryController extends BaseVoyagerBreadController
         $enquiries = FormEnquiry::all();
 
         return view('voyager-forms::enquiries.index', [
-            'dataType' => Voyager::model('DataType')
-                ->where('slug', '=', $this->getSlug($request))
-                ->first(),
+            'dataType' => $this->getDataType($request),
             'enquiries' => $enquiries,
         ]);
     }
@@ -36,9 +37,7 @@ class EnquiryController extends BaseVoyagerBreadController
         Voyager::canOrFail('add_enquiries');
 
         return view('voyager-forms::enquiries.edit-add', [
-            'dataType' => Voyager::model('DataType')
-                ->where('slug', '=', $this->getSlug($request))
-                ->first(),
+            'dataType' => $this->getDataType($request),
         ]);
     }
 
@@ -117,6 +116,7 @@ class EnquiryController extends BaseVoyagerBreadController
         Voyager::canOrFail('delete_enquiries');
 
         $enquiry = FormEnquiry::findOrFail($id);
+
         $enquiry->delete();
 
         return redirect('voyager-forms::enquiries.index')

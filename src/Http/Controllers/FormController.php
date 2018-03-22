@@ -4,11 +4,14 @@ namespace Pvtl\VoyagerForms\Http\Controllers;
 
 use Pvtl\VoyagerForms\Form;
 use Illuminate\Http\Request;
+use Pvtl\VoyagerForms\Traits\DataType;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class FormController extends BaseVoyagerBreadController
 {
+    use DataType;
+
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -20,9 +23,7 @@ class FormController extends BaseVoyagerBreadController
         $forms = Form::all();
 
         return view('voyager-forms::forms.index', [
-            'dataType' => Voyager::model('DataType')
-                ->where('slug', '=', $this->getSlug($request))
-                ->first(),
+            'dataType' => $this->getDataType($request),
             'forms' => $forms,
         ]);
     }
@@ -36,9 +37,7 @@ class FormController extends BaseVoyagerBreadController
         Voyager::canOrFail('add_forms');
 
         return view('voyager-forms::forms.edit-add', [
-            'dataType' => Voyager::model('DataType')
-                ->where('slug', '=', $this->getSlug($request))
-                ->first(),
+            'dataType' => $this->getDataType($request),
         ]);
     }
 
@@ -50,9 +49,7 @@ class FormController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('add_forms');
 
-        $dataType = Voyager::model('DataType')
-            ->where('slug', '=', $this->getSlug($request))
-            ->first();
+        $dataType = $this->getDataType($request);
 
         Form::create($request->all());
 
@@ -92,9 +89,7 @@ class FormController extends BaseVoyagerBreadController
         $form = Form::findOrFail($id);
 
         return view('voyager-forms::forms.edit-add', [
-            'dataType' => Voyager::model('DataType')
-                ->where('slug', '=', $this->getSlug($request))
-                ->first(),
+            'dataType' => $this->getDataType($request),
             'form' => $form,
         ]);
     }
@@ -108,10 +103,7 @@ class FormController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('edit_forms');
 
-        $dataType = Voyager::model('DataType')
-            ->where('slug', '=', $this->getSlug($request))
-            ->first();
-
+        $dataType = $this->getDataType($request);
         $form = Form::findOrFail($id);
 
         $form->fill($request->all())->save();
@@ -133,11 +125,9 @@ class FormController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('delete_forms');
 
-        $dataType = Voyager::model('DataType')
-            ->where('slug', '=', $this->getSlug($request))
-            ->first();
-
+        $dataType = $this->getDataType($request);
         $form = Form::findOrFail($id);
+
         $form->delete();
 
         return redirect()

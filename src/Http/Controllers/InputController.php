@@ -5,26 +5,13 @@ namespace Pvtl\VoyagerForms\Http\Controllers;
 use Pvtl\VoyagerForms\Form;
 use Illuminate\Http\Request;
 use Pvtl\VoyagerForms\FormInput;
+use Pvtl\VoyagerForms\Traits\DataType;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class InputController extends BaseVoyagerBreadController
 {
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
-     */
-    public function create(Request $request)
-    {
-    }
+    use DataType;
 
     /**
      * @param Request $request
@@ -34,6 +21,7 @@ class InputController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('add_inputs');
 
+        $dataType = $this->getDataType($request);
         $form = Form::findOrFail($request->input('form_id'));
 
         $form->inputs()->create($request->all())->save();
@@ -41,27 +29,9 @@ class InputController extends BaseVoyagerBreadController
         return redirect()
             ->back()
             ->with([
-                'message' => __('voyager.generic.successfully_added_new') . " Input",
+                'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function show(Request $request, $id)
-    {
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(Request $request, $id)
-    {
     }
 
     /**
@@ -74,13 +44,14 @@ class InputController extends BaseVoyagerBreadController
         Voyager::canOrFail('edit_inputs');
 
         $formInput = FormInput::findOrFail($id);
+        $dataType = $this->getDataType($request);
 
         $formInput->fill($request->all())->save();
 
         return redirect()
             ->back()
             ->with([
-                'message' => __('voyager.generic.successfully_updated') . " Input",
+                'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }
@@ -95,13 +66,14 @@ class InputController extends BaseVoyagerBreadController
         Voyager::canOrFail('delete_inputs');
 
         $formInput = FormInput::findOrFail($id);
+        $dataType = $this->getDataType($request);
 
         $formInput->delete();
 
         return redirect()
             ->back()
             ->with([
-                'message' => __('voyager.generic.successfully_deleted') . " Input",
+                'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }
