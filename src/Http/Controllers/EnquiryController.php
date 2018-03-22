@@ -3,14 +3,16 @@
 namespace Pvtl\VoyagerForms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Pvtl\VoyagerForms\Traits\DataType;
-use TCG\Voyager\Facades\Voyager;
+use Pvtl\VoyagerForms\Form;
 use Pvtl\VoyagerForms\FormEnquiry;
+use Pvtl\VoyagerForms\Traits\DataType;
+use Pvtl\VoyagerFrontend\Helpers\ClassEvents;
+use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class EnquiryController extends BaseVoyagerBreadController
 {
-    use DataType;
+    use DataType, ClassEvents;
 
     /**
      * @param Request $request
@@ -42,14 +44,28 @@ class EnquiryController extends BaseVoyagerBreadController
     }
 
     /**
+     * This store method is triggered by any front-end forms generated
+     * with a shortcode - when a user submits the form it will dynamically
+     * trigger a series of events that are associated with this specific form.
+     *
+     * Woah-ho-ho it's magic! Ya'know... never believe it ain't so.
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        Voyager::canOrFail('add_enquiries');
+        $form = Form::where('id', $id)->first();
+        $enquiry = FormEnquiry::create([
+            'form_id' => $form->id,
+            'data' => $request->all(),
+            'mailto' => $form->mailto,
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+        ])->save();
 
-        $enquiry = FormEnquiry::create([]);
+        if ($form->hook) {
+            ClassEvents::executeClass($form->hook);
+        }
 
         return redirect('voyager-forms::enquiries.index')
             ->with([
