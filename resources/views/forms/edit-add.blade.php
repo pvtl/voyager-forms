@@ -187,6 +187,20 @@
                                         <button type="submit"
                                                 class="btn btn-success btn-sm">{{ __('Update This Input') }}</button>
                                     </form>
+
+                                    <form method="POST" action="{{ route('voyager.inputs.destroy', $input->id) }}">
+                                        {{ method_field("DELETE") }}
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                                        <span class="btn-group-xs">
+                                            <button
+                                                data-delete-input-btn
+                                                type="submit"
+                                                style="float:right; margin-top:22px"
+                                                class="btn btn-danger btn-xs delete"
+                                            >{{ __('voyager.generic.delete') }} This Input</button>
+                                        </span>
+                                    </form>
                                 </div> <!-- /.panel-body -->
                             </div>
                         @endforeach
@@ -201,6 +215,15 @@
     <script>
         $('document').ready(function () {
             $('.toggleswitch').bootstrapToggle();
+
+            /**
+             * Confirm DELETE input
+             */
+            $("[data-delete-input-btn]").on('click', function (e) {
+                e.preventDefault();
+                var result = confirm("Are you sure you want to delete this input?");
+                if (result) $(this).closest('form').submit();
+            });
         });
     </script>
 @stop
