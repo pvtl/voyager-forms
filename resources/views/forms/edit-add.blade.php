@@ -36,7 +36,7 @@
 
                                 <div class="form-group">
                                     <label for="type">Field Type</label>
-                                    <select class="form-control" name="input" id="input">
+                                    <select class="form-control" name="type" id="type">
                                         <option value="">-- Select --</option>
 
                                         @foreach (config('voyager-forms.available_inputs') as $key => $value)
