@@ -1,65 +1,75 @@
 @extends('voyager::master')
 
-@section('page_title', "Viewing $dataType->display_name_plural")
-
-@section('css')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@stop
+@section('page_title', __('voyager.generic.viewing').' '.$dataType->display_name_plural)
 
 @section('page_header')
-    <h1 class="page-title">
-        <i class="{{ $dataType->icon }}"></i>
-        {{ "Viewing $dataType->display_name_plural" }}
-    </h1>
-    <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success btn-add-new">
-        <i class="voyager-plus"></i> <span>{{ __('voyager.generic.add_new') }}</span>
-    </a>
+    <div class="container-fluid">
+        <h1 class="page-title">
+            <i class="{{ $dataType->icon }}"></i> {{ $dataType->display_name_plural }}
+        </h1>
+        <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success btn-add-new">
+            <i class="voyager-plus"></i> <span>{{ __('voyager.generic.add_new') }}</span>
+        </a>
+        @can('delete',app($dataType->model_name))
+            @include('voyager::partials.bulk-delete')
+        @endcan
+        @include('voyager::multilingual.language-selector')
+    </div>
 @stop
 
 @section('content')
-    <div class="page-content container-fluid">
+    <div class="page-content browse container-fluid">
         @include('voyager::alerts')
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-bordered">
-                    @if (!$forms || count($forms) === 0)
-                        No forms found, try adding one.
-                    @else
-                        <div class="table-responsive">
-                            <table id="dataTable" class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Title</td>
-                                    <td>View</td>
-                                    <td>Mail To</td>
-                                    <td>Hook</td>
-                                    <td>Updated At</td>
-                                    <td>Actions</td>
-                                </tr>
-                                </thead>
-
-                                @foreach ($forms as $form)
+                    <div class="panel-body">
+                        @if (!$forms || count($forms) === 0)
+                            No forms found, try adding one.
+                        @else
+                            <div class="table-responsive">
+                                <table id="dataTable" class="table table-hover">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $form->id }}</td>
-                                        <td>{{ $form->title }}</td>
-                                        <td>{{ $form->view or 'None' }}</td>
-                                        <td>{{ $form->mailto }}</td>
-                                        <td>{{ $form->hook or 'None' }}</td>
-                                        <td>{{ $form->updated_at }}</td>
-                                        <td>
-                                            <a href="javascript:;" title="{{ __('voyager.generic.delete') }}" class="btn btn-sm btn-danger pull-right delete" data-id="{{ $form->{$form->getKeyName()} }}" id="delete-{{ $form->{$form->getKeyName()} }}">
-                                                <i class="voyager-trash"></i> <span class="hidden-xs hidden-sm">{{ __('voyager.generic.delete') }}</span>
-                                            </a>
-                                            <a href="{{ route('voyager.forms.edit', $form->{$form->getKeyName()}) }}" title="{{ __('Edit') }}" class="btn btn-sm btn-primary pull-right edit">
-                                                <i class="voyager-edit"></i> <span class="hidden-xs hidden-sm">{{ __('Edit') }}</span>
-                                            </a>
-                                        </td>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>View</th>
+                                        <th>Mail To</th>
+                                        <th>Hook</th>
+                                        <th>Updated At</th>
+                                        <th>Actions</th>
                                     </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                    @endif
+                                    </thead>
+
+                                    @foreach ($forms as $form)
+                                        <tr>
+                                            <td>{{ $form->id }}</td>
+                                            <td>{{ $form->title }}</td>
+                                            <td>{{ $form->view or 'None' }}</td>
+                                            <td>{{ $form->mailto }}</td>
+                                            <td>{{ $form->hook or 'None' }}</td>
+                                            <td>{{ $form->updated_at }}</td>
+                                            <td>
+                                                <a href="javascript:;" title="{{ __('voyager.generic.delete') }}"
+                                                   class="btn btn-sm btn-danger pull-right delete"
+                                                   data-id="{{ $form->{$form->getKeyName()} }}"
+                                                   id="delete-{{ $form->{$form->getKeyName()} }}">
+                                                    <i class="voyager-trash"></i> <span
+                                                        class="hidden-xs hidden-sm">{{ __('voyager.generic.delete') }}</span>
+                                                </a>
+                                                <a href="{{ route('voyager.forms.edit', $form->{$form->getKeyName()}) }}"
+                                                   title="{{ __('Edit') }}"
+                                                   class="btn btn-sm btn-primary pull-right edit">
+                                                    <i class="voyager-edit"></i> <span
+                                                        class="hidden-xs hidden-sm">{{ __('Edit') }}</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,9 +80,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('voyager.generic.close') }}"><span
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="{{ __('voyager.generic.close') }}"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="voyager-trash"></i> {{ __('voyager.generic.delete_question') }} {{ strtolower($dataType->display_name_singular) }}?</h4>
+                    <h4 class="modal-title"><i
+                            class="voyager-trash"></i> {{ __('voyager.generic.delete_question') }} {{ strtolower($dataType->display_name_singular) }}
+                        ?</h4>
                 </div>
                 <div class="modal-footer">
                     <form action="{{ route('voyager.'.$dataType->slug.'.index') }}" id="delete_form" method="POST">
@@ -81,7 +94,8 @@
                         <input type="submit" class="btn btn-danger pull-right delete-confirm"
                                value="{{ __('voyager.generic.delete_confirm') }} {{ strtolower($dataType->display_name_singular) }}">
                     </form>
-                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{ __('voyager.generic.cancel') }}</button>
+                    <button type="button" class="btn btn-default pull-right"
+                            data-dismiss="modal">{{ __('voyager.generic.cancel') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
