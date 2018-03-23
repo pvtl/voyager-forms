@@ -16,7 +16,6 @@ class CreateFormsTable extends Migration
         Schema::create('forms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('view')->nullable()->default('');
             $table->mediumText('mailto');
             $table->string('hook')->nullable()->default('');
             $table->string('layout')->default('default');

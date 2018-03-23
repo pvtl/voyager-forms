@@ -135,10 +135,6 @@
                                 <input name="title" class="form-control" type="text"
                                        @if (isset($form->title)) value="{{ $form->title }}" @endif required>
 
-                                <label for="view">View</label><br>
-                                <input name="view" class="form-control" type="text"
-                                       @if (isset($form->view)) value="{{ $form->view }}" @endif>
-
                                 <label for="mailto">Mail To (Separate multiple with ',')</label><br>
                                 <input name="mailto" class="form-control" type="text"
                                        @if (isset($form->mailto)) value="{{ $form->mailto }}" @endif required>
