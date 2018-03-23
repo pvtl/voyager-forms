@@ -4,8 +4,9 @@ namespace Pvtl\VoyagerForms\Http\Controllers;
 
 use Pvtl\VoyagerForms\Form;
 use Illuminate\Http\Request;
-use Pvtl\VoyagerForms\Traits\DataType;
 use TCG\Voyager\Facades\Voyager;
+use Pvtl\VoyagerForms\Traits\DataType;
+use Pvtl\VoyagerForms\Validators\FormValidators;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class FormController extends BaseVoyagerBreadController
@@ -50,6 +51,21 @@ class FormController extends BaseVoyagerBreadController
         Voyager::canOrFail('add_forms');
 
         $dataType = $this->getDataType($request);
+
+        if ($request->input('hook')) {
+            $validator = FormValidators::validateHook($request);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with([
+                        'message' => __('voyager.json.validation_errors'),
+                        'alert-type' => 'error',
+                    ]);
+            }
+        }
 
         Form::create($request->all());
 
@@ -106,6 +122,21 @@ class FormController extends BaseVoyagerBreadController
 
         $dataType = $this->getDataType($request);
         $form = Form::findOrFail($id);
+
+        if ($request->input('hook')) {
+            $validator = FormValidators::validateHook($request);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with([
+                        'message' => __('voyager.json.validation_errors'),
+                        'alert-type' => 'error',
+                    ]);
+            }
+        }
 
         $form->fill($request->all());
         $form->mailto = serialize(
