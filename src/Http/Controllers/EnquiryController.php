@@ -53,12 +53,14 @@ class EnquiryController extends BaseVoyagerBreadController
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $form = Form::where('id', $id)->first();
+        $formData = $request->all();
+        $form = Form::where('id', $request->input('id'))->first();
+
         $enquiry = FormEnquiry::create([
             'form_id' => $form->id,
-            'data' => $request->all(),
+            'data' => serialize($formData),
             'mailto' => $form->mailto,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
         ])->save();
@@ -68,12 +70,13 @@ class EnquiryController extends BaseVoyagerBreadController
         }
 
         foreach (unserialize($form->mailto) as $recipient) {
-            mail($recipient, "New Form Enquiry - $form->title", $enquiry->data);
+            mail($recipient, "New Form Enquiry - $form->title", implode("\r", $formData));
         }
 
-        return redirect('voyager-forms::enquiries.index')
+        return redirect()
+            ->back()
             ->with([
-                'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
+                'message' => __('Form Submitted'),
                 'alert-type' => 'success',
             ]);
     }

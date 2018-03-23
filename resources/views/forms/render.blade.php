@@ -1,5 +1,7 @@
 <form action="{{ route('voyager.enquiries.store') }}" method="POST">
-    {{ csrf_token() }}
+    {{ csrf_field() }}
+
+    <input type="hidden" name="id" value="{{ $form->id }}">
 
     @foreach ($form->inputs as $input)
         <div class="{{ $input->class }}">
