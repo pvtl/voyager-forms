@@ -6,7 +6,7 @@
     @foreach ($form->inputs as $input)
         <div class="{{ $input->class }}">
             <label for="{{ $input->label }}">{{ $input->label }}</label>
-            <input name="{{ $input->label }}" type="{{ $input->type }}">
+            <input name="{{ $input->label }}" type="{{ $input->type }}" @if ($input->required) required @endif>
         </div>
     @endforeach
 
