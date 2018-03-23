@@ -69,7 +69,7 @@ class EnquiryController extends BaseVoyagerBreadController
             ClassEvents::executeClass($form->hook);
         }
 
-        foreach ($form->mailto as $recipient) {
+        foreach (explode(',', str_replace(' ', '', $form->mailto)) as $recipient) {
             mail($recipient, "New Form Enquiry - $form->title", implode("\r", $formData));
         }
 
