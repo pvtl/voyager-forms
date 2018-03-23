@@ -38,13 +38,10 @@
                                     <label for="type">Field Type</label>
                                     <select class="form-control" name="input" id="input">
                                         <option value="">-- Select --</option>
-                                        <option value="text">Text</option>
-                                        <option value="number">Number</option>
-                                        <option value="email">Email</option>
-                                        <option value="text_area">Text Area</option>
-                                        <option value="checkbox">Checkbox</option>
-                                        <option value="select">Select</option>
-                                        <option value="radio">Radio</option>
+
+                                        @foreach (config('voyager-forms.available_inputs') as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
                                     </select>
                                 </div> <!-- /.form-group -->
 
