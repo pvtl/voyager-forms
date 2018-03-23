@@ -18,6 +18,16 @@ class FormEnquiry extends Model
         return $this->belongsTo(Form::class);
     }
 
+    public function setMailToAttribute($value)
+    {
+        $this->attributes['mailto'] = serialize($value);
+    }
+
+    public function getMailToAttribute($value)
+    {
+        return unserialize($value);
+    }
+
     public function setDataAttribute($value)
     {
         $this->attributes['data'] = serialize($value);
