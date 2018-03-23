@@ -87,6 +87,7 @@ class FormController extends BaseVoyagerBreadController
         Voyager::canOrFail('edit_forms');
 
         $form = Form::findOrFail($id);
+        $form->mailto = implode(', ', unserialize($form->mailto));
 
         return view('voyager-forms::forms.edit-add', [
             'dataType' => $this->getDataType($request),
@@ -106,7 +107,11 @@ class FormController extends BaseVoyagerBreadController
         $dataType = $this->getDataType($request);
         $form = Form::findOrFail($id);
 
-        $form->fill($request->all())->save();
+        $form->fill($request->all());
+        $form->mailto = serialize(
+            explode(',', str_replace(' ', '', ($request->input('mailto'))))
+        );
+        $form->save();
 
         return redirect()
             ->back()

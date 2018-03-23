@@ -67,6 +67,10 @@ class EnquiryController extends BaseVoyagerBreadController
             ClassEvents::executeClass($form->hook);
         }
 
+        foreach (unserialize($form->mailto) as $recipient) {
+            mail($recipient, "New Form Enquiry - $form->title", $enquiry->data);
+        }
+
         return redirect('voyager-forms::enquiries.index')
             ->with([
                 'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
