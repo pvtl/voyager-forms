@@ -122,6 +122,8 @@ class EnquiryController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('edit_enquiries');
 
+        $dataType = $this->dataType($request);
+
         return redirect('voyager-forms::enquiries.index')
             ->with([
                 'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
@@ -139,10 +141,12 @@ class EnquiryController extends BaseVoyagerBreadController
         Voyager::canOrFail('delete_enquiries');
 
         $enquiry = FormEnquiry::findOrFail($id);
+        $dataType = $this->getDataType($request);
 
         $enquiry->delete();
 
-        return redirect('voyager-forms::enquiries.index')
+        return redirect()
+            ->back()
             ->with([
                 'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
