@@ -131,17 +131,23 @@
                                 @if (isset($form->id))
                                     {{ method_field("PUT") }}
                                 @endif
-                                <label for="title">Title</label><br>
-                                <input name="title" class="form-control" type="text"
-                                       @if (isset($form->title)) value="{{ $form->title }}" @endif required>
+                                <div class="form-group">
+                                    <label for="title">Title</label><br>
+                                    <input name="title" class="form-control" type="text"
+                                           @if (isset($form->title)) value="{{ $form->title }}" @endif required>
+                                </div>
 
-                                <label for="mailto">Mail To (Separate multiple with ',')</label><br>
-                                <input name="mailto" class="form-control" type="text"
-                                       @if (isset($form->mailto)) value="{{ $form->mailto }}" @endif required>
+                                <div class="form-group">
+                                    <label for="mailto">Mail To (Separate multiple with ',')</label><br>
+                                    <input name="mailto" class="form-control" type="text"
+                                           @if (isset($form->mailto)) value="{{ $form->mailto }}" @endif required>
+                                </div>
 
-                                <label for="hook">Event Hook (Fires after form is submitted)</label><br>
-                                <input name="hook" class="form-control" type="text"
-                                       @if (isset($form->hook)) value="{{ $form->hook }}" @endif>
+                                <div class="form-group">
+                                    <label for="hook">Event Hook (Fires after form is submitted)</label><br>
+                                    <input name="hook" class="form-control" type="text"
+                                           @if (isset($form->hook)) value="{{ $form->hook }}" @endif>
+                                </div>
 
                                 <div class="panel-footer">
                                     <button type="submit"
@@ -169,19 +175,39 @@
                                         {{ csrf_field() }}
                                         {{ method_field("PUT") }}
 
-                                        <div class="form-group">
-                                            <label for="label">Input Label</label>
-                                            <input name="label" class="form-control" id="label"
-                                                   value="{{ $input->label }}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="label">Input Label</label>
+                                                    <input name="label" class="form-control" id="label"
+                                                           value="{{ $input->label }}">
+                                                </div>
+                                            </div>
 
-                                            <label for="class">Input Class</label>
-                                            <input name="class" class="form-control" id="class"
-                                                   value="{{ $input->class }}">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="class">Input Class</label>
+                                                    <input name="class" class="form-control" id="class"
+                                                           value="{{ $input->class }}">
+                                                </div>
+                                            </div>
 
-                                            <label for="required">Input Required</label>
-                                            <input name="required" class="form-control" id="required"
-                                                   value="{{ $input->required }}">
-                                        </div> <!-- /.form-group -->
+                                            <div class="col-md-6 col-lg-5">
+                                                <div class="form-group">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="required"
+                                                        id="required"
+                                                        data-name="required"
+                                                        class="toggleswitch"
+                                                        value="1"
+                                                        data-on="Yes" {{ $input->required ? 'checked="checked"' : '' }}
+                                                        data-off="No"
+                                                    />
+                                                    <label for="required"> &nbsp;Input Required</label>
+                                                </div> <!-- /.form-group -->
+                                            </div>
+                                        </div>
 
                                         <input type="hidden" name="input_id" value="{{ $input->id }}"/>
                                         <button type="submit"

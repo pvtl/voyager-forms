@@ -46,7 +46,9 @@ class InputController extends BaseVoyagerBreadController
         $formInput = FormInput::findOrFail($id);
         $dataType = $this->getDataType($request);
 
-        $formInput->fill($request->all())->save();
+        $formInput->fill($request->all());
+        $formInput->required = $request->has('required');
+        $formInput->save();
 
         return redirect()
             ->back()
