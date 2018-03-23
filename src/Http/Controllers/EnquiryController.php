@@ -12,7 +12,7 @@ use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadContr
 
 class EnquiryController extends BaseVoyagerBreadController
 {
-    use DataType, ClassEvents;
+    use DataType;
 
     /**
      * @param Request $request
