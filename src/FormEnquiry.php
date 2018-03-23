@@ -13,15 +13,6 @@ class FormEnquiry extends Model
         'ip_address',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'data' => 'array',
-    ];
-
     public function form()
     {
         return $this->belongsTo(Form::class);

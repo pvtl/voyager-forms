@@ -13,15 +13,6 @@ class Form extends Model
         'hook',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'mailto' => 'array',
-    ];
-
     public function inputs()
     {
         return $this->hasMany(FormInput::class);

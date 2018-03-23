@@ -16,15 +16,6 @@ class FormInput extends Model
         'required',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'options' => 'array',
-    ];
-
     public function form()
     {
         return $this->belongsTo(Form::class);
