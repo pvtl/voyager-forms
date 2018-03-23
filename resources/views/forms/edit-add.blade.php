@@ -200,7 +200,7 @@
                                                 <div class="form-group">
                                                     <label for="options">Input Options (Separated with ',')</label>
                                                     <input name="options" class="form-control" id="options"
-                                                           value="{{ $input->options }}">
+                                                           value="{{ $input->options }}" required>
                                                 </div>
                                             </div>
                                         @endif
