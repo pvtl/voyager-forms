@@ -137,4 +137,26 @@ class FormController extends BaseVoyagerBreadController
                 'alert-type' => 'success',
             ]);
     }
+
+    /**
+     * POST - Change Form Layout
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id - the form id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeLayout(Request $request, $id)
+    {
+        $page = Form::findOrFail($id);
+
+        $page->layout = $request->layout;
+        $page->save();
+
+        return redirect()
+            ->back()
+            ->with([
+                'message' => __('voyager.generic.successfully_updated') . " Form Layout",
+                'alert-type' => 'success',
+            ]);
+    }
 }

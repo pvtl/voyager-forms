@@ -19,6 +19,7 @@ class CreateFormsTable extends Migration
             $table->string('view')->nullable()->default('');
             $table->mediumText('mailto');
             $table->string('hook')->nullable()->default('');
+            $table->string('layout')->default('default');
             $table->timestamps();
         });
     }

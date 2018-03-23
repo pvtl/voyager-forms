@@ -1,4 +1,6 @@
-<form action="" method="POST">
+<form action="{{ route('voyager.enquiries.store') }}" method="POST">
+    {{ csrf_token() }}
+
     @foreach ($form->inputs as $input)
         <div class="{{ $input->class }}">
             <label for="{{ $input->label }}">{{ $input->label }}</label>

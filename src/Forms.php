@@ -3,6 +3,7 @@
 namespace Pvtl\VoyagerForms;
 
 use Pvtl\VoyagerForms\Form;
+use Illuminate\Support\Facades\View;
 
 class Forms
 {
@@ -19,7 +20,11 @@ class Forms
     {
         $form = self::model('Form')->where('id', $key)->first();
 
-        return view('voyager-forms::forms.render', [
+        if (!View::exists('voyager-forms::layouts.' . $form->layout)) {
+            $form->layout = 'default';
+        }
+
+        return view('voyager-forms::layouts.' . $form->layout, [
             'form' => $form,
         ]);
     }

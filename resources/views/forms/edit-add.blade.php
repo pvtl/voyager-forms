@@ -53,41 +53,49 @@
                                         class="btn btn-success btn-sm">{{ __('voyager.generic.add') }}</button>
                             </form>
                         </div> <!-- /.panel-body -->
-                        {{--<div class="panel panel-bordered panel-warning">--}}
-                        {{--<div class="panel-heading">--}}
-                        {{--<h3 class="panel-title">Page Layout</h3>--}}
-                        {{--<div class="panel-actions">--}}
-                        {{--<a class="panel-collapse-icon voyager-angle-down" data-toggle="block-collapse" aria-hidden="true"></a>--}}
-                        {{--</div> <!-- /.panel-actions -->--}}
-                        {{--</div> <!-- /.panel-heading -->--}}
 
-                        {{--<div class="panel-body">--}}
-                        {{--<form role="form" action="{{ route('voyager.forms.layout', $form->id) }}" method="POST"--}}
-                        {{--enctype="multipart/form-data">--}}
-                        {{--{{ csrf_field() }}--}}
+                        <div class="panel panel-bordered panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Form Layout</h3>
+                                <div class="panel-actions">
+                                    <a class="panel-collapse-icon voyager-angle-down" data-toggle="block-collapse"
+                                       aria-hidden="true"></a>
+                                </div> <!-- /.panel-actions -->
+                            </div> <!-- /.panel-heading -->
 
-                        {{--<div class="form-group">--}}
-                        {{--<label for="layout">Change Form Layout</label>--}}
-                        {{--<select class="form-control" name="layout" id="layout">--}}
-                        {{--<option value="default">-- Select --</option>--}}
-                        {{--@foreach($formLayouts as $layout)--}}
-                        {{--<option--}}
-                        {{--value="{{ $layout }}"--}}
-                        {{--@if ($form->layout === $layout)--}}
-                        {{--selected="selected"--}}
-                        {{--@endif--}}
-                        {{-->--}}
-                        {{--{{ ucwords(str_replace(array('_', '-'), ' ', $layout)) }}--}}
-                        {{--</option>--}}
-                        {{--@endforeach--}}
-                        {{--</select>--}}
-                        {{--</div> <!-- /.form-group -->--}}
+                            <div class="panel-body">
+                                <form role="form" action="{{ route('voyager.forms.layout', $form->id) }}" method="POST"
+                                      enctype="multipart/form-data">
+                                    {{ csrf_field() }}
 
-                        {{--<input type="hidden" name="page_id" value="{{ $form->id }}"/>--}}
-                        {{--<button type="submit" class="btn btn-success btn-sm">{{ __('voyager.generic.update') }}</button>--}}
-                        {{--</form>--}}
-                        {{--</div> <!-- /.panel-body -->--}}
-                        {{--</div> <!-- /.panel -->--}}
+                                    @php
+                                        $formLayouts = $form->getLayouts();
+                                    @endphp
+
+                                    <div class="form-group">
+                                        <label for="layout">Change Form Layout</label>
+                                        <select class="form-control" name="layout" id="layout">
+                                            <option value="default">-- Select --</option>
+                                            @foreach($formLayouts as $layout)
+                                                <option
+                                                    value="{{ $layout }}"
+                                                    @if ($form->layout === $layout)
+                                                    selected="selected"
+                                                    @endif
+                                                >
+                                                    {{ ucwords(str_replace(array('_', '-'), ' ', $layout)) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div> <!-- /.form-group -->
+
+                                    <input type="hidden" name="page_id" value="{{ $form->id }}"/>
+                                    <button type="submit"
+                                            class="btn btn-success btn-sm">{{ __('voyager.generic.update') }}</button>
+                                </form>
+                            </div> <!-- /.panel-body -->
+                        </div> <!-- /.panel -->
+
                     </div>
                 </div>
             @endif
