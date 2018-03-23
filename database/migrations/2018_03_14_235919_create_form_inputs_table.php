@@ -19,6 +19,7 @@ class CreateFormInputsTable extends Migration
             $table->string('label')->nullable()->default('');
             $table->string('class')->nullable()->default('');
             $table->enum('type', ['text', 'number', 'email', 'text_area', 'checkbox', 'select', 'radio']);
+            $table->mediumText('options')->nullable()->default('');
             $table->boolean('required')->nullable()->default(false);
             $table->timestamps();
         });

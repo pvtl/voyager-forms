@@ -60,7 +60,7 @@ class EnquiryController extends BaseVoyagerBreadController
 
         $enquiry = FormEnquiry::create([
             'form_id' => $form->id,
-            'data' => serialize($formData),
+            'data' => $formData,
             'mailto' => $form->mailto,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
         ])->save();
@@ -69,7 +69,7 @@ class EnquiryController extends BaseVoyagerBreadController
             ClassEvents::executeClass($form->hook);
         }
 
-        foreach (unserialize($form->mailto) as $recipient) {
+        foreach ($form->mailto as $recipient) {
             mail($recipient, "New Form Enquiry - $form->title", implode("\r", $formData));
         }
 

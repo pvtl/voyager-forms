@@ -195,6 +195,16 @@
                                             </div>
                                         </div>
 
+                                        @if (in_array($input->type, ['checkbox', 'select', 'radio']))
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="options">Input Options (Separated with ',')</label>
+                                                    <input name="options" class="form-control" id="options"
+                                                           value="{{ $input->options }}">
+                                                </div>
+                                            </div>
+                                        @endif
+
                                         <div class="col-md-6 col-lg-5">
                                             <div class="form-group">
                                                 <input

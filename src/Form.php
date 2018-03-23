@@ -13,6 +13,15 @@ class Form extends Model
         'hook',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'mailto' => 'array',
+    ];
+
     public function inputs()
     {
         return $this->hasMany(FormInput::class);
@@ -54,5 +63,15 @@ class Form extends Model
 
         // Reset indexes and return
         return $layouts;
+    }
+
+    public function setMailToAttribute($value)
+    {
+        $this->attributes['mailto'] = serialize($value);
+    }
+
+    public function getMailToAttribute($value)
+    {
+        return unserialize($value);
     }
 }
