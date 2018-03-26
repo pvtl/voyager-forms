@@ -8,7 +8,7 @@
             <label for="{{ $input->label }}">{{ $input->label }}</label>
 
             @if (in_array($input->type, ['text', 'number', 'email']))
-                <input name="{{ $input->label }}" type="text" @if ($input->required) required @endif>
+                <input name="{{ $input->label }}" type="{{ $input->type }}" @if ($input->required) required @endif>
             @endif
 
             @if ($input->type === 'text_area')
