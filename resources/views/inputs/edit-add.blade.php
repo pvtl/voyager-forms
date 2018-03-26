@@ -75,6 +75,7 @@
 
                 <input type="hidden" name="input_id" value="{{ $input->id }}"/>
                 <button type="submit"
+                        style="float:left"
                         class="btn btn-success btn-sm">{{ __('Update This Input') }}</button>
             </form>
 
@@ -86,7 +87,7 @@
                     <button
                         data-delete-input-btn
                         type="submit"
-                        style="float:right; margin-top:22px"
+                        style="float:right; margin-top:12px"
                         class="btn btn-danger btn-xs delete"
                     >{{ __('voyager.generic.delete') }} This Input</button>
                 </span>
