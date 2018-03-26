@@ -11,9 +11,9 @@
             {{ method_field("PUT") }}
 
             <div class="row">
-                <div class="col-md-6 no-bottom-margin">
+                <div class="col-md-4 no-bottom-margin">
                     <div class="form-group">
-                        <label for="label">Input Type</label>
+                        <label for="label">Type</label>
                         <select class="form-control" name="type" id="type" required>
                             @foreach (config('voyager-forms.available_inputs') as $key => $value)
                                 {{ $key }}
@@ -23,31 +23,31 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 no-bottom-margin">
+                <div class="col-md-4 no-bottom-margin">
                     <div class="form-group">
-                        <label for="label">Input Label</label>
+                        <label for="label">Label</label>
                         <input name="label" class="form-control" id="label" value="{{ $input->label }}" required>
                     </div>
                 </div>
 
-                <div class="col-md-6 no-bottom-margin">
+                <div class="col-md-4 no-bottom-margin">
                     <div class="form-group">
-                        <label for="class">Input Class</label>
+                        <label for="class">CSS Classes</label>
                         <input name="class" class="form-control" id="class" value="{{ $input->class }}">
                     </div>
                 </div>
 
                 @if (in_array($input->type, ['checkbox', 'select', 'radio']))
-                    <div class="col-md-6 no-bottom-margin">
+                    <div class="col-md-4 no-bottom-margin">
                         <div class="form-group">
-                            <label for="options">Input Options (Separated with ',')</label>
+                            <label for="options">Options <small>(Separated with ',')</small></label>
                             <input name="options" class="form-control" id="options" value="{{ $input->options }}"
                                     required>
                         </div>
                     </div>
                 @endif
 
-                <div class="col-md-6 no-bottom-margin">
+                <div class="col-md-4 no-bottom-margin">
                     <div class="form-group">
                         <input
                             type="checkbox"

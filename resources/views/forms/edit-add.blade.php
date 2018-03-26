@@ -6,7 +6,21 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style type="text/css">
+        /* Remove bottom margins */
         .row>[class*=col-].no-bottom-margin { margin-bottom: 0; }
+
+        /* Toggle Button */
+        .toggle.btn {
+            box-shadow: 0 5px 9px -3px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.2) !important;
+        }
+
+        /* Make Inputs a 'lil more visible */
+        select,
+        input[type="text"],
+        .panel-body .select2-selection {
+            border: 1px solid rgba(0,0,0,0.17)
+        }
     </style>
 @stop
 
@@ -37,7 +51,7 @@
                         @endif
 
                         <div class="panel-heading">
-                            <h3 class="panel-title">Form Details</h3>
+                            <h3 class="panel-title"><i class="voyager-info-circled"></i> Form Details</h3>
                         </div> <!-- /.panel-heading -->
 
                         <div class="panel-body">
@@ -63,13 +77,13 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="mailto">Mail To (Separate multiple with ',')</label><br>
+                                    <label for="mailto">Mail To <small>(Separate multiple with ',')</small></label><br>
                                     <input name="mailto" class="form-control" type="text"
                                            @if (isset($form->mailto)) value="{{ $form->mailto }}" @endif required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="hook">Event Hook (Fires after form is submitted)</label><br>
+                                    <label for="hook">Event Hook <small>(Fires after form is submitted)</small></label><br>
                                     <input name="hook" class="form-control" type="text"
                                            @if (isset($form->hook)) value="{{ $form->hook }}" @endif>
                                 </div>
@@ -82,7 +96,7 @@
 
                     <div class="panel">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Form Layout</h3>
+                            <h3 class="panel-title"><i class="voyager-window-list"></i> Form Layout</h3>
                         </div> <!-- /.panel-heading -->
 
                         <div class="panel-body">
@@ -120,7 +134,7 @@
 
                     <div class="panel panel-bordered panel-warning">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Add Field</h3>
+                            <h3 class="panel-title"><i class="voyager-plus"></i> Add Field</h3>
                         </div> <!-- /.panel-heading -->
 
                         <div class="panel-body">
