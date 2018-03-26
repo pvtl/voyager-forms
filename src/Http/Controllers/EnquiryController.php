@@ -58,16 +58,16 @@ class EnquiryController extends BaseVoyagerBreadController
         $formData = $request->all();
         $form = Form::where('id', $request->input('id'))->first();
 
+        if ($form->hook) {
+            ClassEvents::executeClass($form->hook);
+        }
+
         $enquiry = FormEnquiry::create([
             'form_id' => $form->id,
             'data' => $formData,
             'mailto' => $form->mailto,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
         ])->save();
-
-        if ($form->hook) {
-            ClassEvents::executeClass($form->hook);
-        }
 
         foreach (explode(',', str_replace(' ', '', $form->mailto)) as $recipient) {
             mail($recipient, "New Form Enquiry - $form->title", implode("\r", $formData));
