@@ -15,21 +15,36 @@
             {{ method_field("PUT") }}
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label for="label">Input Label</label>
-                        <input name="label" class="form-control" id="label" value="{{ $input->label }}">
+                        <input name="label" class="form-control" id="label" value="{{ $input->label }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="label">Input Type</label>
+                        <select class="form-control" name="type" id="type" required>
+                            @foreach (config('voyager-forms.available_inputs') as $key => $value)
+                                {{ $key }}
+                                <option value="{{ $key }}" @if ($key === $input->type) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="class">Input Class</label>
-                        <input name="class" class="form-control" id="class"
-                               value="{{ $input->class }}">
+                        <input name="class" class="form-control" id="class" value="{{ $input->class }}">
                     </div>
                 </div>
+            </div>
 
+            <div class="row">
                 @if (in_array($input->type, ['checkbox', 'select', 'radio']))
                     <div class="col-md-12">
                         <div class="form-group">
