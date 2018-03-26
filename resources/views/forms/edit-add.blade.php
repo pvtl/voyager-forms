@@ -4,6 +4,10 @@
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style type="text/css">
+        .row>[class*=col-].no-bottom-margin { margin-bottom: 0; }
+    </style>
 @stop
 
 @section('page_header')

@@ -11,7 +11,7 @@
             {{ method_field("PUT") }}
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 no-bottom-margin">
                     <div class="form-group">
                         <label for="label">Input Type</label>
                         <select class="form-control" name="type" id="type" required>
@@ -23,14 +23,14 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 no-bottom-margin">
                     <div class="form-group">
                         <label for="label">Input Label</label>
                         <input name="label" class="form-control" id="label" value="{{ $input->label }}" required>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 no-bottom-margin">
                     <div class="form-group">
                         <label for="class">Input Class</label>
                         <input name="class" class="form-control" id="class" value="{{ $input->class }}">
@@ -38,7 +38,7 @@
                 </div>
 
                 @if (in_array($input->type, ['checkbox', 'select', 'radio']))
-                    <div class="col-md-6">
+                    <div class="col-md-6 no-bottom-margin">
                         <div class="form-group">
                             <label for="options">Input Options (Separated with ',')</label>
                             <input name="options" class="form-control" id="options" value="{{ $input->options }}"
@@ -47,7 +47,7 @@
                     </div>
                 @endif
 
-                <div class="col-md-6">
+                <div class="col-md-6 no-bottom-margin">
                     <div class="form-group">
                         <input
                             type="checkbox"
