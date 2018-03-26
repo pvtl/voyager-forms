@@ -74,15 +74,14 @@
                             aria-label="{{ __('voyager.generic.close') }}"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"><i
-                            class="voyager-trash"></i> {{ __('voyager.generic.delete_question') }} {{ strtolower($dataType->display_name_singular) }}
-                        ?</h4>
+                            class="voyager-trash"></i> {{ __('voyager.generic.delete_question') }} {{ strtolower($dataType->display_name_singular) }}?</h4>
                 </div>
                 <div class="modal-footer">
                     <form action="{{ route('voyager.'.$dataType->slug.'.index') }}" id="delete_enquiry" method="POST">
                         {{ method_field("DELETE") }}
                         {{ csrf_field() }}
                         <input type="submit" class="btn btn-danger pull-right delete-confirm"
-                               value="{{ __('voyager.generic.delete_confirm') }} {{ strtolower($dataType->display_name_singular) }}">
+                               value="{{ __('voyager.generic.delete_confirm') }}">
                     </form>
                     <button type="button" class="btn btn-default pull-right"
                             data-dismiss="modal">{{ __('voyager.generic.cancel') }}</button>
