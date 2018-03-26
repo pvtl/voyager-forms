@@ -19,7 +19,7 @@
                 <div class="panel panel-bordered">
                     <div class="panel-body">
                         @if (!$enquiries || count($enquiries) === 0)
-                            No enquiries found, try adding one.
+                            No enquiries found.
                         @else
                             <div class="table-responsive">
                                 <table id="dataTable" class="table table-hover">
