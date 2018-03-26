@@ -45,7 +45,7 @@
                                     @foreach ($forms as $form)
                                         <tr>
                                             <td>{{ $form->id }}</td>
-                                            <td>{{ "{!" . "! form($form->id) !" . "!}" }}</td>
+                                            <td>{{ "{!" . "! forms($form->id) !" . "!}" }}</td>
                                             <td>{{ $form->title }}</td>
                                             <td>{{ $form->layout or 'None' }}</td>
                                             <td>{{ $form->mailto }}</td>
