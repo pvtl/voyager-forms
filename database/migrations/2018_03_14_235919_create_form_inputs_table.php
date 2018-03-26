@@ -16,10 +16,10 @@ class CreateFormInputsTable extends Migration
         Schema::create('form_inputs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('form_id');
-            $table->string('label')->nullable()->default('');
-            $table->string('class')->nullable()->default('');
+            $table->string('label')->nullable()->default(null);
+            $table->string('class')->nullable()->default(null);
             $table->enum('type', ['text', 'number', 'email', 'text_area', 'checkbox', 'select', 'radio']);
-            $table->mediumText('options')->nullable()->default('');
+            $table->mediumText('options')->nullable()->default(null);
             $table->boolean('required')->nullable()->default(false);
             $table->timestamps();
         });

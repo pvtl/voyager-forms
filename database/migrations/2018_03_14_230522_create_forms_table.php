@@ -17,7 +17,7 @@ class CreateFormsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->mediumText('mailto');
-            $table->string('hook')->nullable()->default('');
+            $table->string('hook')->nullable()->default(null);
             $table->string('layout')->default('default');
             $table->timestamps();
         });
