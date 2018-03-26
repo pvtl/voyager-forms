@@ -74,11 +74,7 @@ class EnquiryController extends BaseVoyagerBreadController
         }
 
         return redirect()
-            ->back()
-            ->with([
-                'message' => __('Form Submitted'),
-                'alert-type' => 'success',
-            ]);
+            ->back();
     }
 
     /**
