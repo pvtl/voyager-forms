@@ -2,10 +2,6 @@
     <div class="panel panel-bordered panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">{{ ucwords(str_replace('_', ' ', $input->type)) }} Input</h3>
-            <div class="panel-actions">
-                <a class="panel-collapse-icon voyager-angle-down" data-toggle="block-collapse"
-                   aria-hidden="true"></a>
-            </div> <!-- /.panel-actions -->
         </div> <!-- /.panel-heading -->
 
         <div class="panel-body">
