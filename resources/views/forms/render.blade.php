@@ -4,38 +4,37 @@
     <input type="hidden" name="id" value="{{ $form->id }}">
 
     @foreach ($form->inputs as $input)
-        @php
-            $row = $input;
-            $row->field = $row->label;
-
-            $options = $input->options;
-        @endphp
-
         <div class="{{ $input->class }}">
             <label for="{{ $input->label }}">{{ $input->label }}</label>
 
             @if (in_array($input->type, ['text', 'number', 'email']))
-                @include('voyager::formfields.text')
+                <input name="{{ $input->label }}" type="text" @if ($input->required) required @endif>
             @endif
 
             @if ($input->type === 'text_area')
-                @include('voyager::formfields.text_area')
+                <textarea name="{{ $input->label }}" @if ($input->required) required @endif></textarea>
             @endif
 
-            @if ($input->type === 'checkbox')
-                @include('voyager::formfields.checkbox')
+            @if (in_array($input->type, ['radio', 'checkbox']))
+                @foreach (explode(', ', $input->options) as $option)
+                    <label for="{{ $option }}-{{ $input->type }}">{{ ucwords($option) }}
+                        <input id="{{ $option }}-{{ $input->type }}" name="{{ $input->label }}"
+                               type="{{ $input->type }}">
+                    </label>
+                @endforeach
             @endif
 
             @if ($input->type === 'select')
-                @include('voyager::formfields.select_dropdown')
-            @endif
+                <select name="{{ $input->label }}" @if ($input->required) required @endif>
+                    <option value="">-- Select --</option>
 
-            @if ($input->type === 'radio')
-                @include('voyager::formfields.radio_btn')
+                    @foreach (explode(', ', $input->options) as $option)
+                        <option value="{{ $option }}">{{ $option }}</option>
+                    @endforeach
+                </select>
             @endif
-
         </div>
     @endforeach
 
-    <button type="submit" value="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" value="submit" class="button">Submit</button>
 </form>
