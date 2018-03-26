@@ -47,6 +47,12 @@
                                                     <i class="voyager-trash"></i> <span
                                                         class="hidden-xs hidden-sm">{{ __('voyager.generic.delete') }}</span>
                                                 </a>
+                                                <a href="{{ route('voyager.enquiries.show', $enquiry->{$enquiry->getKeyName()}) }}"
+                                                   title="{{ __('View') }}"
+                                                   class="btn btn-sm btn-warning pull-right view">
+                                                    <i class="voyager-eye"></i> <span
+                                                        class="hidden-xs hidden-sm">{{ __('View') }}</span>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach

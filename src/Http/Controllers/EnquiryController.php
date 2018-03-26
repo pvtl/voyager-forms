@@ -92,7 +92,8 @@ class EnquiryController extends BaseVoyagerBreadController
 
         $enquiry = FormEnquiry::findOrFail($id);
 
-        return view('voyager-forms::enquiries.edit-add', [
+        return view('voyager-forms::enquiries.view', [
+            'dataType' => $this->getDataType($request),
             'enquiry' => $enquiry,
         ]);
     }
@@ -122,7 +123,7 @@ class EnquiryController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('edit_enquiries');
 
-        $dataType = $this->dataType($request);
+        $dataType = $this->getDataType($request);
 
         return redirect('voyager-forms::enquiries.index')
             ->with([
