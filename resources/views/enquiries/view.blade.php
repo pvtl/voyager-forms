@@ -22,12 +22,16 @@
 
                         <div class="panel-body">
                             <b>Form ID</b>
-                            <p>{{ $enquiry->form_id }}</p>
+                            <p>
+                                <a href="{{ route('voyager.forms.edit', $enquiry->form_id) }}">
+                                    {{ $enquiry->form_id }} (View)
+                                </a>
+                            </p>
                         </div>
 
                         <div class="panel-body">
                             <b>Mailed To</b>
-                            <p>{{ $enquiry->mailed_to }}</p>
+                            <p>{{ $enquiry->mailto }}</p>
                         </div>
 
                         <div class="panel-body">

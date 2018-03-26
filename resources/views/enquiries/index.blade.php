@@ -35,7 +35,11 @@
 
                                     @foreach ($enquiries as $enquiry)
                                         <tr>
-                                            <td><a href="{{ route('voyager.forms.edit', $enquiry->form_id) }}">{{ $enquiry->form_id }} (View)</a></td>
+                                            <td>
+                                                <a href="{{ route('voyager.forms.edit', $enquiry->form_id) }}">
+                                                    {{ $enquiry->form_id }} (View)
+                                                </a>
+                                            </td>
                                             <td>{{ $enquiry->mailto }}</td>
                                             <td>{{ $enquiry->ip_address }}</td>
                                             <td>{{ $enquiry->created_at }}</td>
