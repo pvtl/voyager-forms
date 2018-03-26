@@ -61,10 +61,6 @@
                         <h3 class="panel-title">Submitted Data</h3>
 
                         @foreach ($enquiry->data as $key => $value)
-                            @if (in_array($key, ['_token', 'id']))
-                                @continue
-                            @endif
-
                             <div class="panel panel-bordered">
                                 <div class="panel-body">
                                     <b>{{ str_replace('_', ' ', $key) }}</b>

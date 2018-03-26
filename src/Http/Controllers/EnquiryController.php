@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Pvtl\VoyagerForms\Form;
 use Pvtl\VoyagerForms\FormEnquiry;
 use Pvtl\VoyagerForms\Traits\DataType;
+use Pvtl\VoyagerForms\Traits\Email;
 use Pvtl\VoyagerFrontend\Helpers\ClassEvents;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class EnquiryController extends BaseVoyagerBreadController
 {
-    use DataType;
+    use DataType, Email;
 
     /**
      * @param Request $request
@@ -55,7 +56,7 @@ class EnquiryController extends BaseVoyagerBreadController
      */
     public function store(Request $request)
     {
-        $formData = $request->all();
+        $formData = $request->except(['_token', 'id']);
         $form = Form::where('id', $request->input('id'))->first();
 
         if ($form->hook) {
@@ -69,9 +70,7 @@ class EnquiryController extends BaseVoyagerBreadController
             'ip_address' => $_SERVER['REMOTE_ADDR'],
         ])->save();
 
-        foreach (explode(',', str_replace(' ', '', $form->mailto)) as $recipient) {
-            mail($recipient, "New Form Enquiry - $form->title", implode("\r", $formData));
-        }
+        $this->sendEmail($form, $formData);
 
         return redirect()
             ->back();
