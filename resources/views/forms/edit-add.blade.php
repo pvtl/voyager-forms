@@ -106,7 +106,7 @@
                                 </div>
 
                                 <button type="submit"
-                                        class="btn btn-primary">{{ __('voyager.generic.submit') }}</button>
+                                        class="btn btn-primary">{{ __('voyager.generic.update') }}</button>
                             </form>
                         </div>
                     </div>
