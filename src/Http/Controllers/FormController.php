@@ -2,11 +2,12 @@
 
 namespace Pvtl\VoyagerForms\Http\Controllers;
 
-use Pvtl\VoyagerForms\Form;
 use Illuminate\Http\Request;
-use TCG\Voyager\Facades\Voyager;
+use Pvtl\VoyagerForms\Form;
 use Pvtl\VoyagerForms\Traits\DataType;
+use Pvtl\VoyagerFrontend\Helpers\Layouts;
 use Pvtl\VoyagerForms\Validators\FormValidators;
+use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class FormController extends BaseVoyagerBreadController
@@ -26,6 +27,7 @@ class FormController extends BaseVoyagerBreadController
         return view('voyager-forms::forms.index', [
             'dataType' => $this->getDataType($request),
             'forms' => $forms,
+            'layouts' => Layouts::getLayouts('voyager-forms'),
         ]);
     }
 
@@ -39,6 +41,7 @@ class FormController extends BaseVoyagerBreadController
 
         return view('voyager-forms::forms.edit-add', [
             'dataType' => $this->getDataType($request),
+            'layouts' => Layouts::getLayouts('voyager-forms'),
         ]);
     }
 
@@ -90,6 +93,7 @@ class FormController extends BaseVoyagerBreadController
 
         return view('voyager-forms::forms.edit-add', [
             'form' => $form,
+            'layouts' => Layouts::getLayouts('voyager-forms'),
         ]);
     }
 
@@ -107,6 +111,7 @@ class FormController extends BaseVoyagerBreadController
         return view('voyager-forms::forms.edit-add', [
             'dataType' => $this->getDataType($request),
             'form' => $form,
+            'layouts' => Layouts::getLayouts('voyager-forms'),
         ]);
     }
 
@@ -166,28 +171,6 @@ class FormController extends BaseVoyagerBreadController
             ->route('voyager.forms.index')
             ->with([
                 'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
-                'alert-type' => 'success',
-            ]);
-    }
-
-    /**
-     * POST - Change Form Layout
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id - the form id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function changeLayout(Request $request, $id)
-    {
-        $page = Form::findOrFail($id);
-
-        $page->layout = $request->layout;
-        $page->save();
-
-        return redirect()
-            ->back()
-            ->with([
-                'message' => __('voyager.generic.successfully_updated') . " Form Layout",
                 'alert-type' => 'success',
             ]);
     }
