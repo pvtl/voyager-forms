@@ -26,8 +26,7 @@ class FormController extends BaseVoyagerBreadController
 
         return view('voyager-forms::forms.index', [
             'dataType' => $this->getDataType($request),
-            'forms' => $forms,
-            'layouts' => Layouts::getLayouts('voyager-forms'),
+            'forms' => $forms
         ]);
     }
 
@@ -42,6 +41,7 @@ class FormController extends BaseVoyagerBreadController
         return view('voyager-forms::forms.edit-add', [
             'dataType' => $this->getDataType($request),
             'layouts' => Layouts::getLayouts('voyager-forms'),
+            'emailTemplates' => Layouts::getLayouts('voyager-forms', 'email-templates'),
         ]);
     }
 
@@ -94,6 +94,7 @@ class FormController extends BaseVoyagerBreadController
         return view('voyager-forms::forms.edit-add', [
             'form' => $form,
             'layouts' => Layouts::getLayouts('voyager-forms'),
+            'emailTemplates' => Layouts::getLayouts('voyager-forms', 'email-templates'),
         ]);
     }
 
@@ -112,6 +113,7 @@ class FormController extends BaseVoyagerBreadController
             'dataType' => $this->getDataType($request),
             'form' => $form,
             'layouts' => Layouts::getLayouts('voyager-forms'),
+            'emailTemplates' => Layouts::getLayouts('voyager-forms', 'email-templates'),
         ]);
     }
 

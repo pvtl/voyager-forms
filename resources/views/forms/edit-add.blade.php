@@ -117,6 +117,22 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="email_template">Email Template</label>
+                                <select class="form-control" name="email_template" id="email_template">
+                                    @foreach($emailTemplates as $emailTemplate)
+                                        <option
+                                            value="{{ $emailTemplate }}"
+                                            @if (isset($form->email_template) && $form->email_template === $emailTemplate)
+                                            selected="selected"
+                                            @endif
+                                        >
+                                            {{ ucwords(str_replace(array('_', '-'), ' ', $emailTemplate)) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="hook">Event Hook
                                     <small>(Fires after form is submitted)</small>
                                 </label>

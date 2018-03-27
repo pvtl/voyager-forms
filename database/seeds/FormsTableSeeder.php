@@ -22,8 +22,9 @@ class FormsTableSeeder extends Seeder
         if (!$form->exists) {
             $form->fill([
                 'title' => 'Contact Us',
-                'mailto' => 'tech@pvtl.io',
+                'mailto' => 'voyager.forms@mailinator.com',
                 'layout' => 'default',
+                'email_template' => 'default',
             ])->save();
 
             $this->createFormInputs($form);

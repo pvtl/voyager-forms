@@ -11,6 +11,8 @@ class Form extends Model
         'view',
         'mailto',
         'hook',
+        'layout',
+        'email_template',
     ];
 
     public function inputs()
