@@ -32,11 +32,9 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Shortcode</th>
                                         <th>Title</th>
-                                        <th>Layout</th>
+                                        <th>Shortcode</th>
                                         <th>Mail To</th>
-                                        <th>Hook</th>
                                         <th>Updated At</th>
                                         <th>Actions</th>
                                     </tr>
@@ -45,11 +43,9 @@
                                     @foreach ($forms as $form)
                                         <tr>
                                             <td>{{ $form->id }}</td>
-                                            <td>{{ "{!" . "! forms($form->id) !" . "!}" }}</td>
                                             <td>{{ $form->title }}</td>
-                                            <td>{{ $form->layout or 'None' }}</td>
+                                            <td><code>{{ "{!" . "! forms($form->id) !" . "!}" }}</code></td>
                                             <td>{{ $form->mailto }}</td>
-                                            <td>{{ $form->hook or 'None' }}</td>
                                             <td>{{ $form->updated_at }}</td>
                                             <td>
                                                 <a href="javascript:;" title="{{ __('voyager.generic.delete') }}"

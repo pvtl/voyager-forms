@@ -27,7 +27,6 @@
                                     <tr>
                                         <th>Form ID</th>
                                         <th>Mailed To</th>
-                                        <th>IP Address</th>
                                         <th>Submitted At</th>
                                         <th>Actions</th>
                                     </tr>
@@ -41,7 +40,6 @@
                                                 </a>
                                             </td>
                                             <td>{{ $enquiry->mailto }}</td>
-                                            <td>{{ $enquiry->ip_address }}</td>
                                             <td>{{ $enquiry->created_at }}</td>
                                             <td>
                                                 <a href="javascript:;" title="{{ __('voyager.generic.delete') }}"
