@@ -3,6 +3,7 @@
 namespace Pvtl\VoyagerForms\Traits;
 
 use Pvtl\VoyagerForms\Form;
+use Illuminate\Support\Facades\View;
 
 trait Email
 {
@@ -17,20 +18,14 @@ trait Email
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-        $emailData = [];
+        $emailLayout = view('voyager-forms::email-templates.default', $formData);
 
-        array_unshift($emailData, "<html><body>");
-
-        foreach ($formData as $key => $value) {
-            $realKey = str_replace('_', ' ', $key);
-            $emailData[] = "$realKey: $value<br>";
+        if (View::exists('email-templates.' . $form->layout)) {
+            $emailLayout = view('email-templates.' . $form->layout, $formData);
         }
 
-        $emailData = implode("\r\r", $emailData);
-        $emailData .= "</body></html>";
-
         foreach ($recipients as $to) {
-            mail($to, $subject, $emailData, $headers);
+            mail($to, $subject, $emailLayout->render(), $headers);
         }
     }
 }
