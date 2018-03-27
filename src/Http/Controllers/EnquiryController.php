@@ -4,16 +4,17 @@ namespace Pvtl\VoyagerForms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Pvtl\VoyagerForms\Form;
-use Pvtl\VoyagerForms\FormEnquiry;
-use Pvtl\VoyagerForms\Traits\DataType;
-use Pvtl\VoyagerForms\Traits\Email;
-use Pvtl\VoyagerFrontend\Helpers\ClassEvents;
 use TCG\Voyager\Facades\Voyager;
+use Pvtl\VoyagerForms\FormEnquiry;
+use Illuminate\Support\Facades\Mail;
+use Pvtl\VoyagerForms\Traits\DataType;
+use Pvtl\VoyagerFrontend\Helpers\ClassEvents;
+use Pvtl\VoyagerForms\Mail\Enquiry as EnquiryMailable;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class EnquiryController extends BaseVoyagerBreadController
 {
-    use DataType, Email;
+    use DataType;
 
     /**
      * @param Request $request
@@ -56,13 +57,31 @@ class EnquiryController extends BaseVoyagerBreadController
      */
     public function store(Request $request)
     {
-        $formData = $request->except(['_token', 'id']);
         $form = Form::where('id', $request->input('id'))->first();
+        $formData = $request->except(['_token', 'id']);
 
         if ($form->hook) {
             ClassEvents::executeClass($form->hook);
         }
 
+        // The recipients
+        if (empty($form->mailto)) {
+            $form->mailto = !empty(setting('forms.default_to_email'))
+                ? setting('forms.default_to_email')
+                : 'voyager.forms@mailinator.com';
+        }
+
+        // The from address
+        $form->mailfrom = !empty(setting('forms.default_from_email'))
+            ? setting('forms.default_from_email')
+            : 'voyager.forms@mailinator.com';
+
+        // The from name (eg. site address)
+        $form->mailfromname = !empty(setting('site.title'))
+            ? setting('site.title')
+            : 'Website';
+
+        // Save the enquiry to the DB
         $enquiry = FormEnquiry::create([
             'form_id' => $form->id,
             'data' => $formData,
@@ -70,10 +89,14 @@ class EnquiryController extends BaseVoyagerBreadController
             'ip_address' => $_SERVER['REMOTE_ADDR'],
         ])->save();
 
-        $this->sendEmail($form, $formData);
+        // Debug/Preview the email
+        // return (new EnquiryMailable($form, $formData))->render();
 
-        return redirect()
-            ->back();
+        // Send the email
+        Mail::to(explode(',', $form->mailto))
+            ->send(new EnquiryMailable($form, $formData));
+
+        return redirect()->back();
     }
 
     /**
