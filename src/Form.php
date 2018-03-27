@@ -17,7 +17,7 @@ class Form extends Model
 
     public function inputs()
     {
-        return $this->hasMany(FormInput::class);
+        return $this->hasMany(FormInput::class)->ordered();
     }
 
     public function setMailToAttribute($value)

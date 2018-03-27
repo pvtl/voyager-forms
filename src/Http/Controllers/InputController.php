@@ -79,4 +79,20 @@ class InputController extends BaseVoyagerBreadController
                 'alert-type' => 'success',
             ]);
     }
+
+    /**
+     * POST - Put inputs into order
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    public function order(Request $request)
+    {
+        $inputOrder = json_decode($request->input('order'));
+
+        foreach ($inputOrder as $index => $item) {
+            $input = FormInput::findOrFail($item->id);
+            $input->order = $index + 1;
+            $input->save();
+        }
+    }
 }

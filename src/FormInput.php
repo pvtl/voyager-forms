@@ -16,6 +16,11 @@ class FormInput extends Model
         'required',
     ];
 
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order', 'ASC');
+    }
+
     public function form()
     {
         return $this->belongsTo(Form::class);

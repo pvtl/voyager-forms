@@ -23,6 +23,31 @@
         .panel-body .select2-selection {
             border: 1px solid rgba(0, 0, 0, 0.17)
         }
+
+        /* Reorder */
+        .dd .dd-placeholder {
+            max-height: 60px;
+            margin-bottom: 22px;
+        }
+        .dd h3.panel-title,
+        .dd-dragel h3.panel-title {
+            padding-left: 55px;
+        }
+        .dd-dragel .panel-body,
+        .dd-dragging .panel-body {
+            display: none !important;
+        }
+        .order-handle {
+            z-index: 1;
+            position: absolute;
+            padding: 20px 15px 19px;
+            background: rgba(255,255,255,0.2);
+            font-size: 15px;
+            color: #fff;
+            line-height: 20px;
+            box-shadow: inset -2px 0px 2px rgba(0,0,0,0.1);
+            cursor: move;
+        }
     </style>
 @stop
 
@@ -161,7 +186,7 @@
 
                         <div class="panel-body">
                             <form role="form" action="{{ route('voyager.inputs.store') }}" method="POST"
-                                  enctype="multipart/form-data">
+                                enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
                                 <div class="form-group">
@@ -180,13 +205,17 @@
                                         class="btn btn-success btn-sm">{{ __('voyager.generic.add') }}</button>
                             </form>
                         </div> <!-- /.panel-body -->
-                    </div>
+                    </div> <!-- /.panel -->
                 @endif
             </div>
 
             <div class="col-md-8">
                 @if (isset($form))
-                    @each('voyager-forms::inputs.edit-add', $form->inputs, 'input')
+                    <div class="dd">
+                        <ol class="dd-list">
+                            @each('voyager-forms::inputs.edit-add', $form->inputs, 'input')
+                        </ol>
+                    </div> <!-- /.dd -->
                 @endif
             </div>
         </div>
@@ -212,6 +241,33 @@
              */
             $("[data-select-all-contents]").on("click", function () {
                $(this).select();
+            });
+
+            /**
+             * ORDER Inputs
+             */
+             // Init drag 'n drop
+            $('.dd').nestable({ handleClass: 'order-handle', maxDepth: 1 });
+
+            // Close all panels when dragging
+            $('.order-handle').on('mousedown', function() { $('.dd').addClass('dd-dragging'); });
+
+            // Fire request when drag complete
+            $('.dd').on('change', function (e) {
+                // Only when it's a result of drag and drop
+                // -- Otherwise this triggers on every form change within .dd
+                if ($('.dd').hasClass('dd-dragging')) {
+                    // And reopen panels once drag has finished
+                    $('.dd').removeClass('dd-dragging');
+
+                    // Post the request
+                    $.post('{{ route('voyager.forms.order') }}', {
+                        order: JSON.stringify($('.dd').nestable('serialize')),
+                        _token: '{{ csrf_token() }}'
+                    }, function (data) {
+                        toastr.success("Order saved");
+                    });
+                }
             });
         });
     </script>
