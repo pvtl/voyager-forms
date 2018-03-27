@@ -35,7 +35,7 @@ class SettingsTableSeeder extends Seeder
             ])->save();
         }
 
-        $setting = $this->findSetting('forms.recaptcha_site_key');
+        $setting = $this->findSetting('admin.google_recaptcha_site_key');
 
         if (!$setting->exists) {
             $setting->fill([
@@ -43,12 +43,12 @@ class SettingsTableSeeder extends Seeder
                 'value' => '',
                 'details' => 'This key can be found in your Google reCAPTCHA console',
                 'type' => 'text',
-                'order' => 3,
-                'group' => 'Forms',
+                'order' => 1,
+                'group' => 'Admin',
             ])->save();
         }
 
-        $setting = $this->findSetting('forms.recaptcha_site_secret');
+        $setting = $this->findSetting('admin.google_recaptcha_secret_key');
 
         if (!$setting->exists) {
             $setting->fill([
@@ -56,8 +56,8 @@ class SettingsTableSeeder extends Seeder
                 'value' => '',
                 'details' => 'This key can be found in your Google reCAPTCHA console',
                 'type' => 'text',
-                'order' => 4,
-                'group' => 'Forms',
+                'order' => 1,
+                'group' => 'Admin',
             ])->save();
         }
     }
