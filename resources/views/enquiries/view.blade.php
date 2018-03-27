@@ -15,63 +15,54 @@
     <div class="page-content browse container-fluid">
         @include('voyager::alerts')
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="panel panel-bordered panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Enquiry</h3>
+                    </div> <!-- /.panel-heading -->
+
+                    <table class="table">
+                        <tr>
+                            <th width="25%">Form ID</th>
+                            <td>
+                                <a href="{{ route('voyager.forms.edit', $enquiry->form_id) }}">
+                                    {{ $enquiry->form_id }} (View)
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Mailed To</th>
+                            <td>{{ $enquiry->mailto }}</td>
+                        </tr>
+                        <tr>
+                            <th>From IP Address</th>
+                            <td>{{ $enquiry->ip_address }}</td>
+                        </tr>
+                        <tr>
+                            <th>Submitted At</th>
+                            <td>{{ $enquiry->created_at }}</td>
+                        </tr>
+                    </table>
+                </div> <!-- /.panel -->
+            </div> <!-- /.col -->
+
+            <div class="col-md-8">
                 <div class="panel panel-bordered">
-                    <div class="panel-body">
-                        <h3 class="panel-title">Enquiry Data</h3>
-
-                        <div class="panel panel-bordered">
-                            <div class="panel-body">
-                                <b>Form ID</b>
-                                <p>
-                                    <a href="{{ route('voyager.forms.edit', $enquiry->form_id) }}">
-                                        {{ $enquiry->form_id }} (View)
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="panel panel-bordered">
-                            <div class="panel-body">
-                                <b>Mailed To</b>
-                                <p>{{ $enquiry->mailto }}</p>
-                            </div>
-                        </div>
-
-                        <div class="panel panel-bordered">
-                            <div class="panel-body">
-                                <b>IP Address</b>
-                                <p>{{ $enquiry->ip_address }}</p>
-                            </div>
-                        </div>
-
-                        <div class="panel panel-bordered">
-                            <div class="panel-body">
-                                <b>Submitted At</b>
-                                <p>{{ $enquiry->created_at }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel panel-bordered">
-                    <div class="panel-body">
+                    <div class="panel-heading">
                         <h3 class="panel-title">Submitted Data</h3>
+                    </div> <!-- /.panel-heading -->
 
+                    <table class="table">
                         @foreach ($enquiry->data as $key => $value)
-                            <div class="panel panel-bordered">
-                                <div class="panel-body">
-                                    <b>{{ str_replace('_', ' ', $key) }}</b>
-                                    <p>{!! nl2br($value) !!}</p>
-                                </div>
-                            </div>
+                            <tr>
+                                <th width="25%">{{ str_replace('_', ' ', $key) }}</th>
+                                <td>{!! nl2br($value) !!}</td>
+                            </tr>
                         @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </table>
+                </div> <!-- /.panel -->
+            </div> <!-- /.col -->
+        </div> <!-- /.row -->
+    </div> <!-- /.page-content -->
 @stop
 
