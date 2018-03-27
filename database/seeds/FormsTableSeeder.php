@@ -9,10 +9,10 @@ use Pvtl\VoyagerForms\FormInput;
 class FormsTableSeeder extends Seeder
 {
     protected $inputs = [
-        'first_name' => 'text',
-        'last_name' => 'text',
+        'name' => 'text',
         'email' => 'email',
-        'comments' => 'text_area',
+        'phone' => 'text',
+        'message' => 'text_area',
     ];
 
     public function run()
@@ -22,7 +22,7 @@ class FormsTableSeeder extends Seeder
         if (!$form->exists) {
             $form->fill([
                 'title' => 'Contact Us',
-                'mailto' => 'voyager.forms@mailinator.com',
+                'mailto' => '',
                 'layout' => 'default',
                 'email_template' => 'default',
             ])->save();
@@ -38,13 +38,17 @@ class FormsTableSeeder extends Seeder
 
     protected function createFormInputs($form)
     {
+        $order = 1;
         foreach ($this->inputs as $key => $value) {
             FormInput::create([
                 'form_id' => $form->id,
                 'label' => ucwords(str_replace('_', ' ', $key)),
                 'type' => $value,
                 'required' => 1,
+                'order' => $order,
             ])->save();
+
+            $order++;
         }
     }
 }

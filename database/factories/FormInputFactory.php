@@ -9,5 +9,6 @@ $factory->define(\Pvtl\VoyagerForms\FormInput::class, function (Faker $faker) {
         'class' => 'form-input',
         'type' => 'email',
         'required' => true,
+        'order' => 0,
     ];
 });
