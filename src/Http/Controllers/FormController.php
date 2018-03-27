@@ -4,6 +4,7 @@ namespace Pvtl\VoyagerForms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Pvtl\VoyagerForms\Form;
+use Pvtl\VoyagerForms\FormInput;
 use Pvtl\VoyagerForms\Traits\DataType;
 use Pvtl\VoyagerFrontend\Helpers\Layouts;
 use Pvtl\VoyagerForms\Validators\FormValidators;
@@ -70,7 +71,28 @@ class FormController extends BaseVoyagerBreadController
             }
         }
 
+        // Create the form
         $form = Form::create($request->all());
+
+        // Create some default inputs
+        $inputs = [
+            'name' => 'text',
+            'email' => 'email',
+            'phone' => 'text',
+            'message' => 'text_area',
+        ];
+        $order = 1;
+        foreach ($inputs as $key => $value) {
+            FormInput::create([
+                'form_id' => $form->id,
+                'label' => ucwords(str_replace('_', ' ', $key)),
+                'type' => $value,
+                'required' => 1,
+                'order' => $order,
+            ])->save();
+
+            $order++;
+        }
 
         return redirect()
             ->route('voyager.forms.edit', ['id' => $form->id])
