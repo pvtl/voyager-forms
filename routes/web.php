@@ -9,5 +9,5 @@ Route::group([
     'middleware' => ['web', 'admin.user'],
     'namespace' => '\Pvtl\VoyagerForms\Http\Controllers'
 ], function () {
-    // Route::post('layout/{id}', ['uses' => "FormController@changeLayout", 'as' => 'layout']);
+    
 });
