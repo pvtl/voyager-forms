@@ -71,15 +71,29 @@
                                 {{ method_field("PUT") }}
                             @endif
                             <div class="form-group">
-                                <label for="title">Title</label><br>
+                                <label for="title">Title</label>
                                 <input name="title" class="form-control" type="text"
                                        @if (isset($form->title)) value="{{ $form->title }}" @endif required>
                             </div>
 
                             <div class="form-group">
+                                <label for="shortcode">Shortcode
+                                    <small>(Paste this code into a text field to display the form)</small>
+                                </label>
+                                <input
+                                    name="shortcode"
+                                    class="form-control"
+                                    type="text"
+                                    value="{{ "{!" . "! forms($form->id) !" . "!}" }}"
+                                    readonly
+                                    data-select-all-contents
+                                />
+                            </div>
+
+                            <div class="form-group">
                                 <label for="mailto">Mail To
                                     <small>(Separate multiple with ',')</small>
-                                </label><br>
+                                </label>
                                 <input name="mailto" class="form-control" type="text"
                                        @if (isset($form->mailto)) value="{{ $form->mailto }}" @endif required>
                             </div>
@@ -103,7 +117,7 @@
                             <div class="form-group">
                                 <label for="hook">Event Hook
                                     <small>(Fires after form is submitted)</small>
-                                </label><br>
+                                </label>
                                 <input name="hook" class="form-control" type="text"
                                        @if (isset($form->hook)) value="{{ $form->hook }}" @endif>
                             </div>
@@ -168,6 +182,13 @@
                 e.preventDefault();
                 var result = confirm("Are you sure you want to delete this input?");
                 if (result) $(this).closest('form').submit();
+            });
+
+            /**
+             * Select all text on focus
+             */
+            $("[data-select-all-contents]").on("click", function () {
+               $(this).select();
             });
         });
     </script>
