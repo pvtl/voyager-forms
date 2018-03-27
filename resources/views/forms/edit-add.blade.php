@@ -83,36 +83,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="hook">Event Hook <small>(Fires after form is submitted)</small></label><br>
-                                    <input name="hook" class="form-control" type="text"
-                                           @if (isset($form->hook)) value="{{ $form->hook }}" @endif>
-                                </div>
-
-                                <button type="submit"
-                                        class="btn btn-primary">{{ __('voyager.generic.submit') }}</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="voyager-window-list"></i> Form Layout</h3>
-                        </div> <!-- /.panel-heading -->
-
-                        <div class="panel-body">
-                            <form role="form" action="{{ route('voyager.forms.layout', $form->id) }}" method="POST"
-                                  enctype="multipart/form-data">
-                                {{ csrf_field() }}
-
-                                @php
-                                    $formLayouts = $form->getLayouts();
-                                @endphp
-
-                                <div class="form-group">
-                                    <label for="layout">Change Form Layout</label>
+                                    <label for="layout">Layout</label>
                                     <select class="form-control" name="layout" id="layout">
                                         <option value="default">-- Select --</option>
-                                        @foreach($formLayouts as $layout)
+                                        @foreach($form->getLayouts() as $layout)
                                             <option
                                                 value="{{ $layout }}"
                                                 @if ($form->layout === $layout)
@@ -123,14 +97,19 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div> <!-- /.form-group -->
+                                </div>
 
-                                <input type="hidden" name="page_id" value="{{ $form->id }}"/>
+                                <div class="form-group">
+                                    <label for="hook">Event Hook <small>(Fires after form is submitted)</small></label><br>
+                                    <input name="hook" class="form-control" type="text"
+                                           @if (isset($form->hook)) value="{{ $form->hook }}" @endif>
+                                </div>
+
                                 <button type="submit"
-                                        class="btn btn-success btn-sm">{{ __('voyager.generic.update') }}</button>
+                                        class="btn btn-primary">{{ __('voyager.generic.submit') }}</button>
                             </form>
-                        </div> <!-- /.panel-body -->
-                    </div> <!-- /.panel -->
+                        </div>
+                    </div>
 
                     <div class="panel panel-bordered panel-warning">
                         <div class="panel-heading">
