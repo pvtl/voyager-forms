@@ -100,7 +100,7 @@
                                     name="mailto"
                                     class="form-control"
                                     type="text"
-                                    value="{{ $form->mailto }}"
+                                    @if (isset($form->mailto)) value="{{ $form->mailto }}" @endif
                                     placeholder="{{ setting('forms.default_to_email') }}"
                                 />
                             </div>
