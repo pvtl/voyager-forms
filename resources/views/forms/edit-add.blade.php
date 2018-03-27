@@ -76,19 +76,21 @@
                                        @if (isset($form->title)) value="{{ $form->title }}" @endif required>
                             </div>
 
-                            <div class="form-group">
-                                <label for="shortcode">Shortcode
-                                    <small>(Paste this code into a text field to display the form)</small>
-                                </label>
-                                <input
-                                    name="shortcode"
-                                    class="form-control"
-                                    type="text"
-                                    value="{{ "{!" . "! forms($form->id) !" . "!}" }}"
-                                    readonly
-                                    data-select-all-contents
-                                />
-                            </div>
+                            @if (isset($form->id))
+                                <div class="form-group">
+                                    <label for="shortcode">Shortcode
+                                        <small>(Paste this code into a text field to display the form)</small>
+                                    </label>
+                                    <input
+                                        name="shortcode"
+                                        class="form-control"
+                                        type="text"
+                                        value="{{ "{!" . "! forms($form->id) !" . "!}" }}"
+                                        readonly
+                                        data-select-all-contents
+                                    />
+                                </div>
+                            @endif
 
                             <div class="form-group">
                                 <label for="mailto">Mail To
