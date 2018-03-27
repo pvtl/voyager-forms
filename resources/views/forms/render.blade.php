@@ -36,5 +36,19 @@
         </div>
     @endforeach
 
-    <button type="submit" value="submit" class="button">Submit</button>
+    <button
+        @if (setting('admin.google_recaptcha_site_key') && setting('admin.google_recaptcha_secret_key'))
+        class="button g-recaptcha"
+        data-sitekey="{{ setting('admin.google_recaptcha_site_key') }}"
+        onclick="setForm({{ $form->title }})"
+        data-callback="onSubmit"
+        @else
+        class="button"
+        @endif
+        id="submit"
+        type="submit"
+        value="submit"
+    >
+        Submit
+    </button>
 </form>
