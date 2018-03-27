@@ -34,6 +34,32 @@ class SettingsTableSeeder extends Seeder
                 'group' => 'Forms',
             ])->save();
         }
+
+        $setting = $this->findSetting('forms.recaptcha_site_key');
+
+        if (!$setting->exists) {
+            $setting->fill([
+                'display_name' => 'Google reCAPTCHA Site Key (public)',
+                'value' => '',
+                'details' => 'This key can be found in your Google reCAPTCHA console',
+                'type' => 'text',
+                'order' => 3,
+                'group' => 'Forms',
+            ])->save();
+        }
+
+        $setting = $this->findSetting('forms.recaptcha_site_secret');
+
+        if (!$setting->exists) {
+            $setting->fill([
+                'display_name' => 'Google reCAPTCHA Secret Key',
+                'value' => '',
+                'details' => 'This key can be found in your Google reCAPTCHA console',
+                'type' => 'text',
+                'order' => 4,
+                'group' => 'Forms',
+            ])->save();
+        }
     }
 
     protected function findSetting($key)
