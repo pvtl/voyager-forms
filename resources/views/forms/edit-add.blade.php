@@ -95,7 +95,7 @@
                                     <small>(Separate multiple with ',')</small>
                                 </label>
                                 <input name="mailto" class="form-control" type="text"
-                                       @if (isset($form->mailto)) value="{{ $form->mailto }}" @endif required>
+                                       value="{{ $form->mailto or setting('forms.default_to_email') }}" required>
                             </div>
 
                             <div class="form-group">

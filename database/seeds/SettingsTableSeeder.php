@@ -14,7 +14,7 @@ class SettingsTableSeeder extends Seeder
         if (!$setting->exists) {
             $setting->fill([
                 'display_name' => 'Default Enquiry To Email',
-                'value' => '',
+                'value' => 'voyager.forms@mailinator.com',
                 'details' => 'The default email address to send form enquiries to',
                 'type' => 'text',
                 'order' => 1,
@@ -27,7 +27,7 @@ class SettingsTableSeeder extends Seeder
         if (!$setting->exists) {
             $setting->fill([
                 'display_name' => 'Default Enquiry From Email',
-                'value' => '',
+                'value' => 'voyager.forms@mailinator.com',
                 'details' => 'The default email address to use as the sender address for form enquiries',
                 'type' => 'text',
                 'order' => 2,
