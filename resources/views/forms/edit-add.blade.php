@@ -108,8 +108,10 @@
                                        @if (isset($form->hook)) value="{{ $form->hook }}" @endif>
                             </div>
 
-                            <button type="submit"
-                                    class="btn btn-primary">{{ __('voyager.generic.update') }}</button>
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('voyager.generic.'.(isset($form->id) ? 'update' : 'add')) }}
+                                {{ $dataType->display_name_singular }}
+                            </button>
                         </form>
                     </div>
                 </div>
