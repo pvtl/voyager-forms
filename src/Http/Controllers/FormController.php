@@ -70,10 +70,10 @@ class FormController extends BaseVoyagerBreadController
             }
         }
 
-        Form::create($request->all());
+        $form = Form::create($request->all());
 
         return redirect()
-            ->route('voyager.forms.index')
+            ->route('voyager.forms.edit', ['id' => $form->id])
             ->with([
                 'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
