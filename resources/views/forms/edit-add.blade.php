@@ -96,8 +96,13 @@
                                 <label for="mailto">Mail To
                                     <small>(Separate multiple with ',')</small>
                                 </label>
-                                <input name="mailto" class="form-control" type="text"
-                                       value="{{ $form->mailto or setting('forms.default_to_email') }}" required>
+                                <input
+                                    name="mailto"
+                                    class="form-control"
+                                    type="text"
+                                    value="{{ $form->mailto }}"
+                                    placeholder="{{ setting('forms.default_to_email') }}"
+                                />
                             </div>
 
                             <div class="form-group">
