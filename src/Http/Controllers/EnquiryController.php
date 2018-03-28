@@ -60,7 +60,7 @@ class EnquiryController extends BaseVoyagerBreadController
     public function submit(Request $request)
     {
         $form = Form::findOrFail($request->id);
-        $formData = $request->except(['_token', 'id']);
+        $formData = $request->except(['_token', 'id', 'g-recaptcha-response']);
 
         // Check if reCAPTCHA is on & verify
         if (setting('admin.google_recaptcha_site_key')) {
