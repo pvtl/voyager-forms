@@ -6,7 +6,7 @@ This [Laravel](https://laravel.com/) package adds dynamic form creation and shor
 
 - Create & manage forms and their fields (add fields, drag/drop into order etc)
 - Output forms on the frontend with an simple shortcode (`{!! forms(<FORM_ID>) !!}`)
-- Eah form's output on the frontend are overridable with custom layouts
+- Each form's output on the frontend are overridable with custom layouts
 - All submissions are emailed inside overridable HTML email templates
 - All submissions are backed up to the database and accessible under Voyager Admins > Forms > Enquiries
 
