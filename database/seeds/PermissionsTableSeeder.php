@@ -42,7 +42,7 @@ class PermissionsTableSeeder extends Seeder
     {
         $this->generatePermissions($this->formsPermissions, 'forms');
         $this->generatePermissions($this->inputsPermissions, 'form_inputs');
-        $this->generatePermissions($this->enquiriesPermissions, 'form_enquiries');
+        $this->generatePermissions($this->enquiriesPermissions, 'enquiries');
     }
 
 
