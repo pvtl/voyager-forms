@@ -48,7 +48,7 @@ class EnquiryController extends BaseVoyagerBreadController
     }
 
     /**
-     * This store method is triggered by any front-end forms generated
+     * This submit method is triggered by any front-end forms generated
      * with a shortcode - when a user submits the form it will dynamically
      * trigger a series of events that are associated with this specific form.
      *
