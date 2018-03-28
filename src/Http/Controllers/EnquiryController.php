@@ -55,9 +55,9 @@ class EnquiryController extends BaseVoyagerBreadController
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function submit(Request $request)
     {
-        $form = Form::where('id', $request->input('id'))->first();
+        $form = Form::findOrFail($request->id);
         $formData = $request->except(['_token', 'id']);
 
         // Execute the hook
@@ -97,7 +97,9 @@ class EnquiryController extends BaseVoyagerBreadController
         Mail::to(explode(',', $form->mailto))
             ->send(new EnquiryMailable($form, $formData));
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', "Form submitted successfully");
     }
 
     /**

@@ -1,7 +1,9 @@
-<form action="{{ route('voyager.enquiries.store') }}" method="POST" id="{{ $form->title }}">
+<form action="{{ route('voyager.enquiries.submit', ['id' => $form->id]) }}" method="POST" id="{{ $form->title }}">
     {{ csrf_field() }}
 
-    <input type="hidden" name="id" value="{{ $form->id }}">
+    @if (session('success'))
+        <div class="callout success">{{ session('success') }}</div>
+    @endif
 
     @foreach ($form->inputs as $input)
         <div class="{{ $input->class }}">
