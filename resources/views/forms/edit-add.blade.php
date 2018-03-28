@@ -163,6 +163,18 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="message_success">Success Message</label>
+                                <input
+                                    name="message_success"
+                                    class="form-control"
+                                    type="text"
+                                    @if (!isset($form)) value="Success! Thanks for your enquiry." @endif
+                                    @if (isset($form->message_success)) value="{{ $form->message_success }}" @endif
+                                    placeholder="Thanks for your enquiry"
+                                />
+                            </div>
+
+                            <div class="form-group">
                                 <label for="hook">Event Hook
                                     <small>(Fires after form is submitted)</small>
                                 </label>

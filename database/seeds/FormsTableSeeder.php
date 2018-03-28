@@ -25,6 +25,7 @@ class FormsTableSeeder extends Seeder
                 'mailto' => '',
                 'layout' => 'default',
                 'email_template' => 'default',
+                'message_success' => 'Success! Thanks for your enquiry.',
             ])->save();
 
             $this->createFormInputs($form);

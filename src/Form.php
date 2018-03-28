@@ -13,6 +13,7 @@ class Form extends Model
         'hook',
         'layout',
         'email_template',
+        'message_success',
     ];
 
     public function inputs()

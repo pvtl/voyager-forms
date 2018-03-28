@@ -99,7 +99,7 @@ class EnquiryController extends BaseVoyagerBreadController
 
         return redirect()
             ->back()
-            ->with('success', "Form submitted successfully");
+            ->with('success', $form->message_success);
     }
 
     /**

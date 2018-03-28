@@ -20,6 +20,7 @@ class CreateFormsTable extends Migration
             $table->string('hook')->nullable()->default(null);
             $table->string('layout')->default('default');
             $table->string('email_template')->default('default');
+            $table->string('message_success')->default(null);
             $table->timestamps();
         });
     }
