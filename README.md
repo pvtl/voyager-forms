@@ -44,7 +44,13 @@ You can easily display your created forms on the front-end in any kind of output
 
 ## Form Hooks
 
-You may also wish to include custom logic and functionality after your form has been submitted (but before the submission has saved to the DB - eg. so that you can execute custom validation). This can be done with a __Form Hook__ Block - simply specify your controllers namespace'd path and the method you wish to call and the Voyager Forms module will automatically execute it upon submission.
+You may also wish to include custom logic and functionality when your form has been submitted (but before the submission has saved to the DB - eg. so that you can execute custom validation). This can be done with a __Form Hook__ Block - simply specify your controllers namespace'd path and the method you wish to call and the Voyager Forms module will automatically execute it upon submission. For example:
+
+```php
+Pvtl\AwesomeModule\Somewhere\ClassName::anExampleHey('hello world')
+```
+
+_Note that in the above example, the first param of the actual method will be the submission data and the second param will be 'hello world'_
 
 ---
 

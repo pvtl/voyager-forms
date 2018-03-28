@@ -60,8 +60,9 @@ class EnquiryController extends BaseVoyagerBreadController
         $form = Form::where('id', $request->input('id'))->first();
         $formData = $request->except(['_token', 'id']);
 
+        // Execute the hook
         if ($form->hook) {
-            ClassEvents::executeClass($form->hook);
+            ClassEvents::executeClass($form->hook, $formData);
         }
 
         // The recipients
