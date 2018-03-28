@@ -189,7 +189,13 @@ class FormController extends BaseVoyagerBreadController
         $dataType = $this->getDataType($request);
         $form = Form::findOrFail($id);
 
+        // Delete the form
         $form->delete();
+
+        // Delete the inputs from this form
+        FormInput::where([
+            ['form_id', '=', $id],
+        ])->delete();
 
         return redirect()
             ->route('voyager.forms.index')
