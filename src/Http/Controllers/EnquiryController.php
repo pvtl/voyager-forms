@@ -3,13 +3,15 @@
 namespace Pvtl\VoyagerForms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Pvtl\VoyagerForms\Form;
-use TCG\Voyager\Facades\Voyager;
-use Pvtl\VoyagerForms\FormEnquiry;
 use Illuminate\Support\Facades\Mail;
-use Pvtl\VoyagerForms\Traits\DataType;
+use Pvtl\VoyagerForms\{
+    Form,
+    FormEnquiry,
+    Traits\DataType,
+    Mail\Enquiry as EnquiryMailable
+};
 use Pvtl\VoyagerFrontend\Helpers\ClassEvents;
-use Pvtl\VoyagerForms\Mail\Enquiry as EnquiryMailable;
+use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
 
 class EnquiryController extends BaseVoyagerBreadController
@@ -59,6 +61,11 @@ class EnquiryController extends BaseVoyagerBreadController
     {
         $form = Form::findOrFail($request->id);
         $formData = $request->except(['_token', 'id']);
+
+        // Check if reCAPTCHA is on & verify
+        if (setting('admin.google_recaptcha_site_key')) {
+            $this->verifyCaptcha($request);
+        }
 
         // Execute the hook
         if ($form->hook) {
@@ -173,5 +180,27 @@ class EnquiryController extends BaseVoyagerBreadController
                 'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
+    }
+
+    /**
+     * Verify the reCAPTCHA response with Google
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function verifyCaptcha(Request $request)
+    {
+        $client = new \GuzzleHttp\Client();
+        $guzzleRequest = new \GuzzleHttp\Psr7\Request('POST', 'https://www.google.com/recaptcha/api/siteverify');
+        $response = $client->send($guzzleRequest, [
+            'secret' => setting('admin.google_recaptcha_secret_key'),
+            'response' => $request->input('g-recaptcha-response'),
+            'remoteip' => $_SERVER['REMOTE_ADDR'],
+        ]);
+
+        if ($response->getStatusCode() !== 200) {
+            return redirect()
+                ->back()
+                ->with('error', 'Unable to validate Google reCAPTCHA');
+        }
     }
 }

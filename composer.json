@@ -1,50 +1,51 @@
 {
-  "name": "pvtl/voyager-forms",
-  "description": "Ahoy! - A package to implement forms into Voyager",
-  "keywords": [
-    "laravel",
-    "frontend",
-    "voyager",
-    "forms"
-  ],
-  "license": "MIT",
-  "type": "library",
-  "authors": [
-    {
-      "name": "Pivotal Agency",
-      "homepage": "http://pivotalagency.com.au",
-      "email": "tech@pivotalagency.com.au"
+    "name": "pvtl/voyager-forms",
+    "description": "Ahoy! - A package to implement forms into Voyager",
+    "keywords": [
+        "laravel",
+        "frontend",
+        "voyager",
+        "forms"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Pivotal Agency",
+            "homepage": "http://pivotalagency.com.au",
+            "email": "tech@pivotalagency.com.au"
+        }
+    ],
+    "require": {
+        "laravel/framework": "5.5.*",
+        "tcg/voyager": "^1.0",
+        "pvtl/voyager-frontend": "@dev",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "classmap": [],
+        "psr-4": {
+            "Pvtl\\VoyagerForms\\": "src/",
+            "Pvtl\\VoyagerForms\\Database\\": "database/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [],
+        "psr-4": {
+            "Pvtl\\VoyagerForms\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pvtl\\VoyagerForms\\Providers\\VoyagerFormsServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit --colors=always"
     }
-  ],
-  "require": {
-    "laravel/framework": "5.5.*",
-    "tcg/voyager": "^1.0",
-    "pvtl/voyager-frontend": "@dev"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^5.7"
-  },
-  "autoload": {
-    "classmap": [],
-    "psr-4": {
-      "Pvtl\\VoyagerForms\\": "src/",
-      "Pvtl\\VoyagerForms\\Database\\": "database/"
-    }
-  },
-  "autoload-dev": {
-    "classmap": [],
-    "psr-4": {
-      "Pvtl\\VoyagerForms\\Tests\\": "tests/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Pvtl\\VoyagerForms\\Providers\\VoyagerFormsServiceProvider"
-      ]
-    }
-  },
-  "scripts": {
-    "test": "phpunit --colors=always"
-  }
 }

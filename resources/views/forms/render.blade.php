@@ -1,8 +1,12 @@
-<form action="{{ route('voyager.enquiries.submit', ['id' => $form->id]) }}" method="POST" id="{{ $form->title }}">
+<form id="{{ $form->title }}" action="{{ route('voyager.enquiries.submit', ['id' => $form->id]) }}" method="POST">
     {{ csrf_field() }}
 
     @if (session('success'))
         <div class="callout success">{{ session('success') }}</div>
+    @endif
+
+    @if (session('error'))
+        <div class="callout error">{{ session('error') }}</div>
     @endif
 
     @foreach ($form->inputs as $input)
@@ -50,19 +54,15 @@
         </div>
     @endforeach
 
-    <button
-        @if (setting('admin.google_recaptcha_site_key') && setting('admin.google_recaptcha_secret_key'))
-        class="button g-recaptcha"
-        data-sitekey="{{ setting('admin.google_recaptcha_site_key') }}"
-        onclick="setForm({{ $form->title }})"
-        data-callback="onSubmit"
-        @else
-        class="button"
-        @endif
-        id="submit"
-        type="submit"
-        value="submit"
-    >
-        Submit
-    </button>
+    @if (setting('admin.google_recaptcha_site_key'))
+        <button
+            class="button g-recaptcha"
+            data-sitekey="{{ setting('admin.google_recaptcha_site_key') }}"
+            data-callback="onSubmit" onclick="setFormId('{{ $form->title }}')"
+        >
+            Submit
+        </button>
+    @else
+        <button class="button" id="submit" type="submit" value="submit">Submit</button>
+    @endif
 </form>
