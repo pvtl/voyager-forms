@@ -27,6 +27,7 @@
                                     <tr>
                                         <th>Form ID</th>
                                         <th>Mailed To</th>
+                                        <th>Data</th>
                                         <th>Submitted At</th>
                                         <th>Actions</th>
                                     </tr>
@@ -36,10 +37,19 @@
                                         <tr>
                                             <td>
                                                 <a href="{{ route('voyager.forms.edit', $enquiry->form_id) }}">
-                                                    {{ $enquiry->form_id }} (View)
+                                                    {{ $enquiry->form_id }} (View Associated Form)
                                                 </a>
                                             </td>
                                             <td>{{ $enquiry->mailto }}</td>
+                                            <td>
+                                                @php $count = 0 @endphp
+                                                @foreach ($enquiry->data as $key => $value)
+                                                    @php $count++ @endphp
+                                                    @if ($count > 2) @continue @endif
+
+                                                    <b>{{ $key }}</b>: {{ $value }}<br>
+                                                @endforeach
+                                            </td>
                                             <td>{{ $enquiry->created_at }}</td>
                                             <td>
                                                 <a href="javascript:;" title="{{ __('voyager.generic.delete') }}"
