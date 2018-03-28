@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Pvtl\VoyagerForms\{
     Form,
-    FormEnquiry,
+    Enquiry,
     Traits\DataType,
     Mail\Enquiry as EnquiryMailable
 };
@@ -26,7 +26,7 @@ class EnquiryController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('browse_enquiries');
 
-        $enquiries = FormEnquiry::all();
+        $enquiries = Enquiry::all();
 
         return view('voyager-forms::enquiries.index', [
             'dataType' => $this->getDataType($request),
@@ -90,7 +90,7 @@ class EnquiryController extends BaseVoyagerBreadController
             : 'Website';
 
         // Save the enquiry to the DB
-        $enquiry = FormEnquiry::create([
+        $enquiry = Enquiry::create([
             'form_id' => $form->id,
             'data' => $formData,
             'mailto' => $form->mailto,
@@ -118,7 +118,7 @@ class EnquiryController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('read_enquiries');
 
-        $enquiry = FormEnquiry::findOrFail($id);
+        $enquiry = Enquiry::findOrFail($id);
 
         return view('voyager-forms::enquiries.view', [
             'dataType' => $this->getDataType($request),
@@ -135,7 +135,7 @@ class EnquiryController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('edit_enquiries');
 
-        $enquiry = FormEnquiry::findOrFail($id);
+        $enquiry = Enquiry::findOrFail($id);
 
         return view('voyager-forms::enquiries.edit-add', [
             'enquiry' => $enquiry,
@@ -169,7 +169,7 @@ class EnquiryController extends BaseVoyagerBreadController
     {
         Voyager::canOrFail('delete_enquiries');
 
-        $enquiry = FormEnquiry::findOrFail($id);
+        $enquiry = Enquiry::findOrFail($id);
         $dataType = $this->getDataType($request);
 
         $enquiry->delete();

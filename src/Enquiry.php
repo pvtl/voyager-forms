@@ -4,7 +4,7 @@ namespace Pvtl\VoyagerForms;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FormEnquiry extends Model
+class Enquiry extends Model
 {
     protected $fillable = [
         'form_id',
