@@ -23,7 +23,7 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_singular' => 'Form',
                 'display_name_plural' => 'Forms',
                 'icon' => 'voyager-documentation',
-                'controller' => 'Pvtl\VoyagerForms\Http\Controllers\FormController',
+                'controller' => '\Pvtl\VoyagerForms\Http\Controllers\FormController',
                 'generate_permissions' => '1',
             ])->save();
         }
@@ -37,7 +37,7 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_singular' => 'Input',
                 'display_name_plural' => 'Inputs',
                 'icon' => 'voyager-documentation',
-                'controller' => 'Pvtl\VoyagerForms\Http\Controllers\InputController',
+                'controller' => '\Pvtl\VoyagerForms\Http\Controllers\InputController',
                 'generate_permissions' => '1',
             ])->save();
         }
@@ -51,7 +51,7 @@ class DataTypesTableSeeder extends Seeder
                 'display_name_singular' => 'Enquiry',
                 'display_name_plural' => 'Enquiries',
                 'icon' => 'voyager-mail',
-                'controller' => 'Pvtl\VoyagerForms\Http\Controllers\EnquiryController',
+                'controller' => '\Pvtl\VoyagerForms\Http\Controllers\EnquiryController',
                 'generate_permissions' => '1',
             ])->save();
         }
