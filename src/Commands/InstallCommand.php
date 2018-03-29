@@ -64,6 +64,7 @@ class InstallCommand extends Command
         $this->info('Seeding data into the database');
         $this->call('db:seed', ['--class' => 'Pvtl\VoyagerForms\Database\Seeds\MenuItemsTableSeeder']);
         $this->call('db:seed', ['--class' => 'Pvtl\VoyagerForms\Database\Seeds\DataTypesTableSeeder']);
+        $this->call('db:seed', ['--class' => 'Pvtl\VoyagerForms\Database\Seeds\DataRowsTableSeeder']);
         $this->call('db:seed', ['--class' => 'Pvtl\VoyagerForms\Database\Seeds\PermissionsTableSeeder']);
         $this->call('db:seed', ['--class' => 'Pvtl\VoyagerForms\Database\Seeds\SettingsTableSeeder']);
         $this->call('db:seed', ['--class' => 'Pvtl\VoyagerForms\Database\Seeds\FormsTableSeeder']);
