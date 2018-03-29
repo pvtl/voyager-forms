@@ -20,22 +20,6 @@ class EnquiryController extends BaseVoyagerBreadController
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-        Voyager::canOrFail('browse_enquiries');
-
-        $enquiries = Enquiry::all();
-
-        return view('voyager-forms::enquiries.index', [
-            'dataType' => $this->getDataType($request),
-            'enquiries' => $enquiries,
-        ]);
-    }
-
-    /**
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
      */
     public function create(Request $request)
@@ -102,7 +86,7 @@ class EnquiryController extends BaseVoyagerBreadController
 
         // Send the email
         Mail::to(explode(',', $form->mailto))
-            ->queue(new EnquiryMailable($form, $formData));
+            ->send(new EnquiryMailable($form, $formData));
 
         return redirect()
             ->back()
@@ -156,28 +140,6 @@ class EnquiryController extends BaseVoyagerBreadController
         return redirect('voyager-forms::enquiries.index')
             ->with([
                 'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
-                'alert-type' => 'success',
-            ]);
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function destroy(Request $request, $id)
-    {
-        Voyager::canOrFail('delete_enquiries');
-
-        $enquiry = Enquiry::findOrFail($id);
-        $dataType = $this->getDataType($request);
-
-        $enquiry->delete();
-
-        return redirect()
-            ->back()
-            ->with([
-                'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }

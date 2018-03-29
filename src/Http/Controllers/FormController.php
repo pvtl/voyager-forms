@@ -17,22 +17,6 @@ class FormController extends BaseVoyagerBreadController
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-        Voyager::canOrFail('browse_forms');
-
-        $forms = Form::all();
-
-        return view('voyager-forms::forms.index', [
-            'dataType' => $this->getDataType($request),
-            'forms' => $forms
-        ]);
-    }
-
-    /**
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
      */
     public function create(Request $request)
@@ -173,34 +157,6 @@ class FormController extends BaseVoyagerBreadController
             ->back()
             ->with([
                 'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
-                'alert-type' => 'success',
-            ]);
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function destroy(Request $request, $id)
-    {
-        Voyager::canOrFail('delete_forms');
-
-        $dataType = $this->getDataType($request);
-        $form = Form::findOrFail($id);
-
-        // Delete the form
-        $form->delete();
-
-        // Delete the inputs from this form
-        FormInput::where([
-            ['form_id', '=', $id],
-        ])->delete();
-
-        return redirect()
-            ->route('voyager.forms.index')
-            ->with([
-                'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }

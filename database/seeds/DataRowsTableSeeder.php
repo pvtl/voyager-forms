@@ -47,7 +47,7 @@ class DataRowsTableSeeder extends Seeder
                     'type' => 'text',
                     'display_name' => $value,
                     'required' => 1,
-                    'browse' => 1,
+                    'browse' => $value === 'data' ? : 1,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,

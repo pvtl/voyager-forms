@@ -16,6 +16,16 @@ class Form extends Model
         'message_success',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        // before delete() method call this
+        static::deleting(function($form) {
+            // do the rest of the cleanup...
+            $form->inputs()->delete();
+        });
+    }
+
     public function inputs()
     {
         return $this->hasMany(FormInput::class)->ordered();

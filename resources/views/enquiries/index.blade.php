@@ -7,6 +7,8 @@
         <h1 class="page-title">
             <i class="{{ $dataType->icon }}"></i> {{ $dataType->display_name_plural }}
         </h1>
+
+        @include('voyager::partials.bulk-delete')
         @include('voyager::multilingual.language-selector')
     </div>
 @stop
@@ -25,16 +27,36 @@
                                 <table id="dataTable" class="table table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Form ID</th>
-                                        <th>Mailed To</th>
-                                        <th>Data</th>
-                                        <th>Submitted At</th>
-                                        <th>Actions</th>
+                                        @can('delete',app($dataType->model_name))
+                                            <th></th>
+                                        @endcan
+                                        @foreach($dataType->browseRows as $row)
+                                            <th>
+                                                @if ($dataType->server_side)
+                                                    <a href="{{ $row->sortByUrl() }}">
+                                                        @endif
+                                                        {{ $row->display_name }}
+                                                        @if ($dataType->server_side)
+                                                            @if ($row->isCurrentSortField())
+                                                                @if (!isset($_GET['sort_order']) || $_GET['sort_order'] == 'asc')
+                                                                    <i class="voyager-angle-up pull-right"></i>
+                                                                @else
+                                                                    <i class="voyager-angle-down pull-right"></i>
+                                                                @endif
+                                                            @endif
+                                                    </a>
+                                                @endif
+                                            </th>
+                                        @endforeach
+                                        <th class="actions">{{ __('voyager.generic.actions') }}</th>
                                     </tr>
                                     </thead>
 
                                     @foreach ($enquiries as $enquiry)
                                         <tr>
+                                            <td>
+                                                <input type="checkbox" name="row_id" id="checkbox_{{ $enquiry->id }}" value="{{ $enquiry->id }}">
+                                            </td>
                                             <td>
                                                 <a href="{{ route('voyager.forms.edit', $enquiry->form_id) }}">
                                                     {{ $enquiry->form_id }} (View Associated Form)
