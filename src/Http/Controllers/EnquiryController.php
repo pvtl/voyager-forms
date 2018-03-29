@@ -102,7 +102,7 @@ class EnquiryController extends BaseVoyagerBreadController
 
         // Send the email
         Mail::to(explode(',', $form->mailto))
-            ->send(new EnquiryMailable($form, $formData));
+            ->queue(new EnquiryMailable($form, $formData));
 
         return redirect()
             ->back()
