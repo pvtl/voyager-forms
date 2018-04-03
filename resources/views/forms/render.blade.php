@@ -57,6 +57,7 @@
     @if (setting('admin.google_recaptcha_site_key'))
         <button
             class="button g-recaptcha"
+            data-badge="inline"
             data-sitekey="{{ setting('admin.google_recaptcha_site_key') }}"
             data-callback="onSubmit" onclick="setFormId('{{ $form->title }}')"
         >
