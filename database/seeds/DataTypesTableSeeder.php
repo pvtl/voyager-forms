@@ -53,6 +53,7 @@ class DataTypesTableSeeder extends Seeder
                 'icon' => 'voyager-mail',
                 'controller' => '\Pvtl\VoyagerForms\Http\Controllers\EnquiryController',
                 'generate_permissions' => '1',
+                'server_side' => '1',
             ])->save();
         }
     }

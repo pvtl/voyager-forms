@@ -64,6 +64,7 @@ class VoyagerFormsServiceProvider extends ServiceProvider
     protected function strapViews()
     {
         $this->loadViewsFrom(self::PACKAGE_DIR . 'resources/views', 'voyager-forms');
+        $this->loadViewsFrom(self::PACKAGE_DIR . 'resources/views/vendor/voyager', 'voyager');
     }
 
     /**
