@@ -85,7 +85,7 @@ class EnquiryController extends BaseVoyagerBreadController
         // return (new EnquiryMailable($form, $formData))->render();
 
         // Send the email
-        Mail::to(explode(',', $form->mailto))
+        Mail::to(array_map('trim', explode(',', $form->mailto)))
             ->send(new EnquiryMailable($form, $formData));
 
         return redirect()
