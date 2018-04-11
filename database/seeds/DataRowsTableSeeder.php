@@ -42,7 +42,7 @@ class DataRowsTableSeeder extends Seeder
         foreach ($columns as $key => $value) {
             $dataRow = DataRow::firstOrNew(['data_type_id' => $dataType->id, 'field' => $value]);
 
-            if (!$dataRow->exists && $value !== 'id') {
+            if (!$dataRow->exists && $value !== 'id' && $value !== 'data') {
                 $dataRow->fill([
                     'type' => 'text',
                     'display_name' => $value,
