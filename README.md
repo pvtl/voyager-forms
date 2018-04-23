@@ -32,7 +32,16 @@ composer require pvtl/voyager-forms
 
 # 2. Run the Installer
 composer dump-autoload && php artisan voyager-forms:install
-```
+
+# 3. Configure to/from addresses
+        -> Navigate to Admin -> Settings -> 'Forms' tab
+        -> Adjust values
+
+# 4. (optional) Add Google invisible reCAPTCHA
+        -> Navigate to Admin -> Settings -> 'Admin' tab
+        -> Insert Google reCATPCHA keys
+
+``` 
 
 ---
 
