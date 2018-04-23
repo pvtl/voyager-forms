@@ -1,16 +1,14 @@
 <?php
 
-namespace Pvtl\VoyagerForms\Database\Seeds;
-
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 use Pvtl\VoyagerForms\Form;
 use Pvtl\VoyagerForms\Enquiry;
 use Pvtl\VoyagerForms\FormInput;
 use TCG\Voyager\Models\DataRow;
 use TCG\Voyager\Models\DataType;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
-class DataRowsTableSeeder extends Seeder
+class FormsDataRowsTableSeeder extends Seeder
 {
     protected $tables = [
         'forms',

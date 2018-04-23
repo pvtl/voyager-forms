@@ -1,10 +1,8 @@
 <?php
 
-namespace Pvtl\VoyagerForms\Database\Seeds;
-
-use Illuminate\Database\Seeder;
 use Pvtl\VoyagerForms\Form;
 use Pvtl\VoyagerForms\FormInput;
+use Illuminate\Database\Seeder;
 
 class FormsTableSeeder extends Seeder
 {

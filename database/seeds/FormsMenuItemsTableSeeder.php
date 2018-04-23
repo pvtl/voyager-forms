@@ -1,13 +1,11 @@
 <?php
 
-namespace Pvtl\VoyagerForms\Database\Seeds;
-
 use TCG\Voyager\Models\Menu;
-use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\MenuItem;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MenuItemsTableSeeder extends Seeder
+class FormsMenuItemsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
@@ -23,9 +21,9 @@ class MenuItemsTableSeeder extends Seeder
             $formsMenuItem->fill([
                 'title' => 'Forms',
                 'menu_id' => $menu->id,
-                'url'     => '',
+                'url' => '',
                 'icon_class' => 'voyager-documentation',
-                'order'   => 7,
+                'order' => 7,
             ])->save();
         }
 
@@ -35,9 +33,9 @@ class MenuItemsTableSeeder extends Seeder
             $formManagementMenuItem->fill([
                 'menu_id' => $menu->id,
                 'parent_id' => $formsMenuItem->id,
-                'url'     => '',
+                'url' => '',
                 'icon_class' => 'voyager-documentation',
-                'order'   => 1,
+                'order' => 1,
                 'route' => 'voyager.forms.index',
             ])->save();
         }
@@ -49,9 +47,9 @@ class MenuItemsTableSeeder extends Seeder
                 'title' => 'Enquiries',
                 'menu_id' => $menu->id,
                 'parent_id' => $formsMenuItem->id,
-                'url'     => '',
+                'url' => '',
                 'icon_class' => 'voyager-mail',
-                'order'   => 2,
+                'order' => 2,
             ])->save();
         }
     }

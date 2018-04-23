@@ -1,11 +1,9 @@
 <?php
 
-namespace Pvtl\VoyagerForms\Database\Seeds;
-
-use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\DataType;
+use Illuminate\Database\Seeder;
 
-class DataTypesTableSeeder extends Seeder
+class FormsDataTypesTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
@@ -14,7 +12,7 @@ class DataTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $formDataType = DataType::firstOrNew([ 'model_name' => 'Pvtl\VoyagerForms\Form']);
+        $formDataType = DataType::firstOrNew(['model_name' => 'Pvtl\VoyagerForms\Form']);
 
         if (!$formDataType->exists) {
             $formDataType->fill([
@@ -28,7 +26,7 @@ class DataTypesTableSeeder extends Seeder
             ])->save();
         }
 
-        $inputDataType = DataType::firstOrNew([ 'model_name' => 'Pvtl\VoyagerForms\FormInput']);
+        $inputDataType = DataType::firstOrNew(['model_name' => 'Pvtl\VoyagerForms\FormInput']);
 
         if (!$inputDataType->exists) {
             $inputDataType->fill([
@@ -42,7 +40,7 @@ class DataTypesTableSeeder extends Seeder
             ])->save();
         }
 
-        $enquiryDataType = DataType::firstOrNew([ 'model_name' => 'Pvtl\VoyagerForms\Enquiry']);
+        $enquiryDataType = DataType::firstOrNew(['model_name' => 'Pvtl\VoyagerForms\Enquiry']);
 
         if (!$enquiryDataType->exists) {
             $enquiryDataType->fill([

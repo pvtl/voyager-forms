@@ -1,11 +1,9 @@
 <?php
 
-namespace Pvtl\VoyagerForms\Database\Seeds;
-
-use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Setting;
+use Illuminate\Database\Seeder;
 
-class SettingsTableSeeder extends Seeder
+class FormsSettingsTableSeeder extends Seeder
 {
     public function run()
     {

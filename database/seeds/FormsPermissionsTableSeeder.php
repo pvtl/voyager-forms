@@ -1,13 +1,11 @@
 <?php
 
-namespace Pvtl\VoyagerForms\Database\Seeds;
-
 use TCG\Voyager\Models\Role;
-use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Permission;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PermissionsTableSeeder extends Seeder
+class FormsPermissionsTableSeeder extends Seeder
 {
     protected $formsPermissions = [
         'browse_forms',
