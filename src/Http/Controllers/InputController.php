@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Pvtl\VoyagerForms\FormInput;
 use Pvtl\VoyagerForms\Traits\DataType;
 use TCG\Voyager\Facades\Voyager;
-use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
+use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 
-class InputController extends BaseVoyagerBreadController
+class InputController extends VoyagerBaseController
 {
     use DataType;
 

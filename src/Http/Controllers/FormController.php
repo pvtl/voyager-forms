@@ -9,9 +9,9 @@ use Pvtl\VoyagerForms\Traits\DataType;
 use Pvtl\VoyagerFrontend\Helpers\Layouts;
 use Pvtl\VoyagerForms\Validators\FormValidators;
 use TCG\Voyager\Facades\Voyager;
-use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
+use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 
-class FormController extends BaseVoyagerBreadController
+class FormController extends VoyagerBaseController
 {
     use DataType;
 

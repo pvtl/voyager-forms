@@ -12,9 +12,9 @@ use Pvtl\VoyagerForms\{
 };
 use Pvtl\VoyagerFrontend\Helpers\ClassEvents;
 use TCG\Voyager\Facades\Voyager;
-use TCG\Voyager\Http\Controllers\VoyagerBreadController as BaseVoyagerBreadController;
+use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 
-class EnquiryController extends BaseVoyagerBreadController
+class EnquiryController extends VoyagerBaseController
 {
     use DataType;
 
