@@ -29,7 +29,7 @@ class InputController extends VoyagerBaseController
         return redirect()
             ->back()
             ->with([
-                'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
+                'message' => __('voyager::generic.successfully_added_new') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }
@@ -53,7 +53,7 @@ class InputController extends VoyagerBaseController
         return redirect()
             ->back()
             ->with([
-                'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
+                'message' => __('voyager::generic.successfully_updated') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }
@@ -75,7 +75,7 @@ class InputController extends VoyagerBaseController
         return redirect()
             ->back()
             ->with([
-                'message' => __('voyager.generic.successfully_deleted') . " {$dataType->display_name_singular}",
+                'message' => __('voyager::generic.successfully_deleted') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }

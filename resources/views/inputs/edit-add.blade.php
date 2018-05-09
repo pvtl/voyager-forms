@@ -82,7 +82,7 @@
                         type="submit"
                         style="float:right; margin-top:12px"
                         class="btn btn-danger btn-xs delete"
-                    >{{ __('voyager.generic.delete') }} This Input</button>
+                    >{{ __('voyager::generic.delete') }} This Input</button>
                 </span>
             </form>
         </div> <!-- /.panel-body -->

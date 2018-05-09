@@ -49,7 +49,7 @@ class FormController extends VoyagerBaseController
                     ->withErrors($validator)
                     ->withInput()
                     ->with([
-                        'message' => __('voyager.json.validation_errors'),
+                        'message' => __('voyager::json.validation_errors'),
                         'alert-type' => 'error',
                     ]);
             }
@@ -81,7 +81,7 @@ class FormController extends VoyagerBaseController
         return redirect()
             ->route('voyager.forms.edit', ['id' => $form->id])
             ->with([
-                'message' => __('voyager.generic.successfully_added_new') . " {$dataType->display_name_singular}",
+                'message' => __('voyager::generic.successfully_added_new') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }
@@ -144,7 +144,7 @@ class FormController extends VoyagerBaseController
                     ->withErrors($validator)
                     ->withInput()
                     ->with([
-                        'message' => __('voyager.json.validation_errors'),
+                        'message' => __('voyager::json.validation_errors'),
                         'alert-type' => 'error',
                     ]);
             }
@@ -156,7 +156,7 @@ class FormController extends VoyagerBaseController
         return redirect()
             ->back()
             ->with([
-                'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
+                'message' => __('voyager::generic.successfully_updated') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }

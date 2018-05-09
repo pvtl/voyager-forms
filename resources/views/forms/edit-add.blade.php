@@ -1,6 +1,6 @@
 @extends('voyager::master')
 
-@section('page_title', __('voyager.generic.'.(isset($form->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular)
+@section('page_title', __('voyager::generic.'.(isset($form->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular)
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -54,7 +54,7 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="{{ $dataType->icon }}"></i>
-        {{ __('voyager.generic.'.(isset($form->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular }}
+        {{ __('voyager::generic.'.(isset($form->id) ? 'edit' : 'add')).' '.$dataType->display_name_singular }}
     </h1>
 @stop
 
@@ -183,7 +183,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">
-                                {{ __('voyager.generic.'.(isset($form->id) ? 'update' : 'add')) }}
+                                {{ __('voyager::generic.'.(isset($form->id) ? 'update' : 'add')) }}
                                 {{ $dataType->display_name_singular }}
                             </button>
                         </form>
@@ -214,7 +214,7 @@
 
                                 <input type="hidden" name="form_id" value="{{ $form->id }}"/>
                                 <button type="submit"
-                                        class="btn btn-success btn-sm">{{ __('voyager.generic.add') }}</button>
+                                        class="btn btn-success btn-sm">{{ __('voyager::generic.add') }}</button>
                             </form>
                         </div> <!-- /.panel-body -->
                     </div> <!-- /.panel -->

@@ -139,7 +139,7 @@ class EnquiryController extends VoyagerBaseController
 
         return redirect('voyager-forms::enquiries.index')
             ->with([
-                'message' => __('voyager.generic.successfully_updated') . " {$dataType->display_name_singular}",
+                'message' => __('voyager::generic.successfully_updated') . " {$dataType->display_name_singular}",
                 'alert-type' => 'success',
             ]);
     }
