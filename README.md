@@ -36,10 +36,12 @@ composer dump-autoload && php artisan voyager-forms:install
 # 3. Configure to/from addresses
         -> Navigate to Admin -> Settings -> 'Forms' tab
         -> Adjust values
+        
+# 4. Configure "MAIL" environment variables
 
-# 4. (optional) Add Google invisible reCAPTCHA
+# 5. (optional) Add Google invisible reCAPTCHA
         -> Navigate to Admin -> Settings -> 'Admin' tab
-        -> Insert Google reCATPCHA keys
+        -> Insert Google reCATPCHA keys 
 
 ``` 
 
