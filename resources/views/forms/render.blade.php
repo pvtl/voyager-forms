@@ -46,6 +46,7 @@
                             id="{{ $option }}-{{ $input->type }}"
                             name="{{ $input->label }}"
                             type="{{ $input->type }}"
+                            value="{{ $option }}"
                         >
                         <label for="{{ $option }}-{{ $input->type }}">{{ ucwords($option) }}</label>
                     @endforeach
