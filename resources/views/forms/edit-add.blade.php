@@ -33,8 +33,7 @@
         .dd-dragel h3.panel-title {
             padding-left: 55px;
         }
-        .dd-dragel .panel-body,
-        .dd-dragging .panel-body {
+        .dd-dragel .panel-body {
             display: none !important;
         }
         .order-handle {
