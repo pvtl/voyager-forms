@@ -273,7 +273,7 @@
                     $('.dd').removeClass('dd-dragging');
 
                     // Post the request
-                    $.post('{{ route('voyager.forms.order') }}', {
+                    $.post('{{ route('voyager.forms.sort') }}', {
                         order: JSON.stringify($('.dd').nestable('serialize')),
                         _token: '{{ csrf_token() }}'
                     }, function (data) {

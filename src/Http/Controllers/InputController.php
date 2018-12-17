@@ -85,7 +85,7 @@ class InputController extends VoyagerBaseController
      *
      * @param \Illuminate\Http\Request $request
      */
-    public function order(Request $request)
+    public function sort(Request $request)
     {
         $inputOrder = json_decode($request->input('order'));
 
