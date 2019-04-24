@@ -1,4 +1,4 @@
-<form id="{{ $form->title }}" action="{{ route('voyager.enquiries.submit', ['id' => $form->id]) }}" method="POST">
+<form id="{{ $form->title }}" action="{{ route('voyager.enquiries.submit', ['id' => $form->id]) }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
 
     @if (session('success'))
@@ -52,6 +52,14 @@
                     @endforeach
                 </fieldset>
             @endif
+
+            @if ($input->type === 'file')
+                <label for="{{ $input->label }}">
+                    {{ $input->label }}
+                    <input type="file" name="{{ $input->label }}" accept="{{ $input->options }}" @if ($input->required) required @endif>
+                </label>
+            @endif
+
         </div>
     @endforeach
 

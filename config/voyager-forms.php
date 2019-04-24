@@ -18,5 +18,6 @@ return [
         'checkbox' => 'Checkbox',
         'select' => 'Select',
         'radio' => 'Radio',
+        'file' => 'File'
     ],
 ];

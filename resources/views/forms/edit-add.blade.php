@@ -204,7 +204,6 @@
                                     <label for="type">Field Type</label>
                                     <select class="form-control" name="type" id="type">
                                         <option value="">-- Select --</option>
-
                                         @foreach (config('voyager-forms.available_inputs') as $key => $value)
                                             <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach

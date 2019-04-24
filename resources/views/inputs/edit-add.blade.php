@@ -32,10 +32,14 @@
                         </div>
                     </div>
 
-                    @if (in_array($input->type, ['checkbox', 'select', 'radio']))
+                    @if (in_array($input->type, ['checkbox', 'select', 'radio', 'file']))
                         <div class="col-md-4 no-bottom-margin">
                             <div class="form-group">
-                                <label for="options">Options <small>(Separated with ',')</small></label>
+                                @if($input->type !== 'file')
+                                    <label for="options">Options <small>(Separated with ", ")</small></label>
+                                @else
+                                    <label for="options">MIME types <small>(Eg. ".pdf,.zip")</small></label>
+                                @endif
                                 <input name="options" class="form-control" id="options" value="{{ $input->options }}"
                                         required>
                             </div>

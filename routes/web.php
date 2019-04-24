@@ -12,6 +12,16 @@ Route::group([
     Route::post('sort', ['uses' => "InputController@sort", 'as' => 'sort']);
 });
 
+Route::group([
+    'as' => 'voyager.enquiries.',
+    'prefix' => 'admin/enquiries/',
+    'middleware' => ['web', 'admin.user'],
+    'namespace' => '\Pvtl\VoyagerForms\Http\Controllers'
+], function () {
+    Route::get('{id}/file/{fileKey}', ['uses' => "EnquiryController@getFile", 'as' => 'file']);
+});
+
+
 /**
  * Front-end Route/s
  */

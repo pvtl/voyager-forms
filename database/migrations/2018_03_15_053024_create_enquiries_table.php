@@ -19,6 +19,7 @@ class CreateEnquiriesTable extends Migration
             $table->mediumText('data');
             $table->mediumText('mailto');
             $table->string('ip_address');
+            $table->mediumText('files_keys')->nullable();
             $table->timestamps();
         });
     }

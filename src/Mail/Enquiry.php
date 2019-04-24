@@ -6,19 +6,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\View;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class Enquiry extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $form;
-    public $enquiry;
+    public $enquiries;
+    public $filesKeys;
 
-    public function __construct($form, $enquiry)
+    public function __construct($form, $enquiries, $filesKeys)
     {
         $this->form = $form;
-        $this->enquiry = $enquiry;
+        $this->enquiries = $enquiries;
+        $this->filesKeys = $filesKeys;
     }
 
     public function build()
@@ -27,8 +28,19 @@ class Enquiry extends Mailable
             $this->form->email_template = 'default';
         }
 
-        return $this->from($this->form->mailfrom, $this->form->mailfromname)
+        //create the email
+        $email = $this->from($this->form->mailfrom, $this->form->mailfromname)
             ->subject($this->form->mailfromname . ' - ' . $this->form->title . ' [New Enquiry]')
             ->view('voyager-forms::email-templates.' . $this->form->email_template);
+
+        //Attach files and unset in enquiry array
+        foreach ($this->enquiries as $key => $enquiry){
+            if(in_array($key, $this->filesKeys)){
+                $email->attach(storage_path('app/' . $enquiry));
+                unset($this->enquiries[$key]);
+            }
+        }
+
+        return $email;
     }
 }

@@ -2,8 +2,12 @@
 
 namespace Pvtl\VoyagerForms\Http\Controllers;
 
+use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Pvtl\VoyagerForms\{
     Form,
     Enquiry,
@@ -11,8 +15,9 @@ use Pvtl\VoyagerForms\{
     Mail\Enquiry as EnquiryMailable
 };
 use Pvtl\VoyagerFrontend\Helpers\ClassEvents;
-use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class EnquiryController extends VoyagerBaseController
 {
@@ -21,10 +26,11 @@ class EnquiryController extends VoyagerBaseController
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create(Request $request)
     {
-        Voyager::canOrFail('add_enquiries');
+        $this->authorize('add', app(Enquiry::class));
 
         return view('voyager-forms::enquiries.edit-add', [
             'dataType' => $this->getDataType($request),
@@ -44,7 +50,13 @@ class EnquiryController extends VoyagerBaseController
     public function submit(Request $request)
     {
         $form = Form::findOrFail($request->id);
-        $formData = $request->except(['_token', 'id', 'g-recaptcha-response']);
+
+        // Get $formData and $filesKeys verifying the MIME of files.
+        $formDataAndFilesKeys = $this->getFormDataAndFilesKeys($form, $request);
+        if($formDataAndFilesKeys instanceof RedirectResponse){
+            return $formDataAndFilesKeys;
+        }
+        list($formData, $filesKeys) = $formDataAndFilesKeys;
 
         // Check if reCAPTCHA is on & verify
         if (setting('admin.google_recaptcha_site_key')) {
@@ -73,20 +85,23 @@ class EnquiryController extends VoyagerBaseController
             ? setting('site.title')
             : 'Website';
 
+        // Upload the images files, update $formData to save the image directory and return all the file keys.
+
         // Save the enquiry to the DB
         $enquiry = Enquiry::create([
             'form_id' => $form->id,
             'data' => $formData,
             'mailto' => $form->mailto,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'files_keys' => $filesKeys
         ])->save();
 
         // Debug/Preview the email
-        // return (new EnquiryMailable($form, $formData))->render();
+        // return (new EnquiryMailable($form, $formData, $filesKeys))->render();
 
         // Send the email
         Mail::to(array_map('trim', explode(',', $form->mailto)))
-            ->send(new EnquiryMailable($form, $formData));
+            ->send(new EnquiryMailable($form, $formData, $filesKeys));
 
         return redirect()
             ->back()
@@ -97,16 +112,35 @@ class EnquiryController extends VoyagerBaseController
      * @param Request $request
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Request $request, $id)
     {
-        Voyager::canOrFail('read_enquiries');
+        $this->authorize('read', app(Enquiry::class));
 
         $enquiry = Enquiry::findOrFail($id);
+
+        //verify files and push in array your infos, unset the file path in data and update the data of $enquiry
+        $files = [];
+        $formData = $enquiry->data;
+        foreach ($enquiry->files_keys as $fileKey) {
+            if (isset($formData[$fileKey])) {
+                $files[] = [
+                    'url' => route('voyager.enquiries.file', [
+                        'id' => $enquiry->id,
+                        'fileKey' => $fileKey
+                    ]),
+                    'filename' => pathinfo($formData[$fileKey])['filename']
+                ];
+                unset($formData[$fileKey]);
+            }
+        }
+        $enquiry->data = $formData;
 
         return view('voyager-forms::enquiries.view', [
             'dataType' => $this->getDataType($request),
             'enquiry' => $enquiry,
+            'files' => $files
         ]);
     }
 
@@ -114,10 +148,11 @@ class EnquiryController extends VoyagerBaseController
      * @param Request $request
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Request $request, $id)
     {
-        Voyager::canOrFail('edit_enquiries');
+        $this->authorize('edit', app(Enquiry::class));
 
         $enquiry = Enquiry::findOrFail($id);
 
@@ -130,10 +165,11 @@ class EnquiryController extends VoyagerBaseController
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, $id)
     {
-        Voyager::canOrFail('edit_enquiries');
+        $this->authorize('edit', app(Enquiry::class));
 
         $dataType = $this->getDataType($request);
 
@@ -143,6 +179,29 @@ class EnquiryController extends VoyagerBaseController
                 'alert-type' => 'success',
             ]);
     }
+
+    /**
+     * Download the file from enquiry
+     * @param $id
+     * @param $fileKey
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function getFile($id, $fileKey)
+    {
+
+        $this->authorize('browse', app(Enquiry::class));
+
+        $enquiry = Enquiry::findOrFail($id);
+        $formData = $enquiry->data;
+
+        //return download if file exists
+        if (isset($formData[$fileKey])) {
+            return Storage::download($formData[$fileKey]);
+        }
+        abort(404);
+
+    }
+
 
     /**
      * Verify the reCAPTCHA response with Google
@@ -164,5 +223,52 @@ class EnquiryController extends VoyagerBaseController
                 ->back()
                 ->with('error', 'Unable to validate Google reCAPTCHA');
         }
+    }
+
+    /**
+     * Get the Form Data and the Files Keys
+     * @param $form
+     * @param $request
+     * @return array With form data updated and files keys|\Illuminate\Http\RedirectResponse
+     */
+    protected function getFormDataAndFilesKeys($form, $request)
+    {
+        $formData = $request->except(['_token', 'id', 'g-recaptcha-response']);
+        $filesKeys = [];
+
+        $mimes = $this->getMimesFromForm($form);
+
+        foreach ($request->files as $key => $data) {
+
+            //IDK WHY!!!, but the $data->storeAs(...) won't work...
+            //Hack to avoid error up
+            $data = $formData[$key];
+            if ($data->isValid()) {
+                $key_slug = Str::slug($key, '_');
+                $extension = $data->getClientOriginalExtension();
+
+                if(!in_array(".{$extension}", $mimes[$key_slug])){
+                    return redirect()
+                        ->back()
+                        ->with('error', 'File(s) not Allowed');
+                }
+
+                $file_name = strtoupper(pathinfo($data->getClientOriginalName(), PATHINFO_FILENAME));
+                $timestamp = Carbon::now()->timestamp;
+                $filepath = $data->storeAs("forms/{$key_slug}", "{$file_name}_{$timestamp}.{$extension}");
+                $filesKeys[] = $key;
+                $formData[$key] = "{$filepath}";
+            }
+        }
+        return [$formData, $filesKeys];
+    }
+
+    protected function getMimesFromForm($form){
+        $mimes = [];
+        $inputs = $form->inputs()->where('type', 'file')->get();
+        foreach($inputs as $key => $input){
+            $mimes[Str::slug($input->label, '_')] = explode(',', $input->options);
+        }
+        return $mimes;
     }
 }

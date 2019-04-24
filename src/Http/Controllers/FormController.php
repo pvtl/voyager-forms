@@ -18,10 +18,11 @@ class FormController extends VoyagerBaseController
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create(Request $request)
     {
-        Voyager::canOrFail('add_forms');
+        $this->authorize('add', app(Form::class));
 
         return view('voyager-forms::forms.edit-add', [
             'dataType' => $this->getDataType($request),
@@ -33,10 +34,11 @@ class FormController extends VoyagerBaseController
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
-        Voyager::canOrFail('add_forms');
+        $this->authorize('add', app(Form::class));
 
         $dataType = $this->getDataType($request);
 
@@ -90,10 +92,11 @@ class FormController extends VoyagerBaseController
      * @param Request $request
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Request $request, $id)
     {
-        Voyager::canOrFail('read_forms');
+        $this->authorize('read', app(Form::class));
 
         $form = Form::findOrFail($id);
 
@@ -108,10 +111,11 @@ class FormController extends VoyagerBaseController
      * @param Request $request
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Request $request, $id)
     {
-        Voyager::canOrFail('edit_forms');
+        $this->authorize('edit', app(Form::class));
 
         $form = Form::findOrFail($id);
 
@@ -127,10 +131,11 @@ class FormController extends VoyagerBaseController
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, $id)
     {
-        Voyager::canOrFail('edit_forms');
+        $this->authorize('edit', app(Form::class));
 
         $dataType = $this->getDataType($request);
         $form = Form::findOrFail($id);

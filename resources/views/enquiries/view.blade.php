@@ -61,6 +61,21 @@
                         @endforeach
                     </table>
                 </div> <!-- /.panel -->
+                <div class="panel panel-bordered">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Files Attached</h3>
+                    </div> <!-- /.panel-heading -->
+
+                    <table class="table">
+                        @foreach($files as $file)
+                            <tr>
+                                <td>
+                                    <a href="{{$file['url']}}" target="_blank">{{$file['filename']}}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div> <!-- /.panel -->
             </div> <!-- /.col -->
         </div> <!-- /.row -->
     </div> <!-- /.page-content -->

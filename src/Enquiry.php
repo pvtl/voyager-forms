@@ -11,6 +11,7 @@ class Enquiry extends Model
         'data',
         'mailto',
         'ip_address',
+        'files_keys'
     ];
 
     public function form()
@@ -34,6 +35,16 @@ class Enquiry extends Model
     }
 
     public function getDataAttribute($value)
+    {
+        return unserialize($value);
+    }
+
+    public function setFilesKeysAttribute($value)
+    {
+        $this->attributes['files_keys'] = serialize($value);
+    }
+
+    public function getFilesKeysAttribute($value)
     {
         return unserialize($value);
     }
