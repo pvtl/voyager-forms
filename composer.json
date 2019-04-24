@@ -7,7 +7,6 @@
         "voyager",
         "forms"
     ],
-    "minimum-stability": "dev",
     "license": "MIT",
     "type": "library",
     "authors": [
