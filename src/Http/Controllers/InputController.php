@@ -6,7 +6,6 @@ use Pvtl\VoyagerForms\Form;
 use Illuminate\Http\Request;
 use Pvtl\VoyagerForms\FormInput;
 use Pvtl\VoyagerForms\Traits\DataType;
-use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 
 class InputController extends VoyagerBaseController
@@ -16,10 +15,11 @@ class InputController extends VoyagerBaseController
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
-        Voyager::canOrFail('add_inputs');
+        $this->authorize('add', app(FormInput::class));
 
         $dataType = $this->getDataType($request);
         $form = Form::findOrFail($request->input('form_id'));
@@ -38,10 +38,11 @@ class InputController extends VoyagerBaseController
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, $id)
     {
-        Voyager::canOrFail('edit_inputs');
+        $this->authorize('edit', app(FormInput::class));
 
         $formInput = FormInput::findOrFail($id);
         $dataType = $this->getDataType($request);
@@ -62,10 +63,11 @@ class InputController extends VoyagerBaseController
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Request $request, $id)
     {
-        Voyager::canOrFail('delete_inputs');
+        $this->authorize('delete', app(FormInput::class));
 
         $formInput = FormInput::findOrFail($id);
         $dataType = $this->getDataType($request);
