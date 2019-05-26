@@ -72,21 +72,18 @@ class EnquiryController extends VoyagerBaseController
         if (empty($form->mailto)) {
             $form->mailto = !empty(setting('forms.default_to_email'))
                 ? setting('forms.default_to_email')
-                : 'voyager.forms@mailinator.com';
+                : false;
         }
 
-        // setup email if enabled
-        if (config('voyager-forms.email.enabled')) {
-            // The from address
-            $form->mailfrom = !empty(setting('forms.default_from_email'))
-                ? setting('forms.default_from_email')
-                : 'voyager.forms@mailinator.com';
+        // The from address
+        $form->mailfrom = !empty(setting('forms.default_from_email'))
+            ? setting('forms.default_from_email')
+            : 'voyager.forms@mailinator.com';
 
-            // The from name (eg. site address)
-            $form->mailfromname = !empty(setting('site.title'))
-                ? setting('site.title')
-                : 'Website';
-        }
+        // The from name (eg. site address)
+        $form->mailfromname = !empty(setting('site.title'))
+            ? setting('site.title')
+            : 'Website';
 
         // Upload the images files, update $formData to save the image directory and return all the file keys.
 
@@ -103,7 +100,7 @@ class EnquiryController extends VoyagerBaseController
         // return (new EnquiryMailable($form, $formData, $filesKeys))->render();
 
         // Send the email if enabled
-        if (config('voyager-forms.email.enabled')) {
+        if ($form->mailto) {
             Mail::to(array_map('trim', explode(',', $form->mailto)))
                 ->send(new EnquiryMailable($form, $formData, $filesKeys));
         }
