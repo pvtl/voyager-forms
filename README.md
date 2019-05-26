@@ -36,6 +36,7 @@ composer dump-autoload && php artisan voyager-forms:install
 # 3. Configure to/from addresses
         -> Navigate to Admin -> Settings -> 'Forms' tab
         -> Adjust values
+        -> Note: If you leave `Default Enquiry To Email` blank and set no email in the form setting, email will not be sent
         
 # 4. Configure "MAIL" environment variables
 
