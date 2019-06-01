@@ -20,8 +20,4 @@ return [
         'radio' => 'Radio',
         'file' => 'File'
     ],
-
-    'email' => [
-        'enabled' => true,
-    ],
 ];
