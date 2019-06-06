@@ -72,7 +72,7 @@ class EnquiryController extends VoyagerBaseController
         if (empty($form->mailto)) {
             $form->mailto = !empty(setting('forms.default_to_email'))
                 ? setting('forms.default_to_email')
-                : 'voyager.forms@mailinator.com';
+                : false;
         }
 
         // The from address
@@ -99,9 +99,11 @@ class EnquiryController extends VoyagerBaseController
         // Debug/Preview the email
         // return (new EnquiryMailable($form, $formData, $filesKeys))->render();
 
-        // Send the email
-        Mail::to(array_map('trim', explode(',', $form->mailto)))
-            ->send(new EnquiryMailable($form, $formData, $filesKeys));
+        // Send the email if enabled
+        if ($form->mailto) {
+            Mail::to(array_map('trim', explode(',', $form->mailto)))
+                ->send(new EnquiryMailable($form, $formData, $filesKeys));
+        }
 
         return redirect()
             ->back()
