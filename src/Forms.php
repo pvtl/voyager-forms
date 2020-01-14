@@ -3,6 +3,7 @@
 namespace Pvtl\VoyagerForms;
 
 use Pvtl\VoyagerForms\Form;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 
@@ -14,7 +15,7 @@ class Forms
 
     protected function model($name)
     {
-        return app($this->models[studly_case($name)]);
+        return app($this->models[Str::studly($name)]);
     }
 
     public function forms($key, $default = null)
