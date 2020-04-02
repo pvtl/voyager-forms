@@ -5,10 +5,6 @@
         <div class="callout success">{{ session('success') }}</div>
     @endif
 
-    @if (session('error'))
-        <div class="callout error">{{ session('error') }}</div>
-    @endif
-
     @foreach ($form->inputs as $input)
         <div class="{{ $input->class }}">
             @if (in_array($input->type, ['text', 'number', 'email']))
@@ -59,7 +55,12 @@
                     <input type="file" name="{{ $input->label }}" accept="{{ $input->options }}" @if ($input->required) required @endif>
                 </label>
             @endif
-
+            
+            @error($input->label)
+                <div class="error">
+                    {{$message}}
+                </div>
+            @enderror
         </div>
     @endforeach
 
