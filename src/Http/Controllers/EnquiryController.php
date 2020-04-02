@@ -51,6 +51,8 @@ class EnquiryController extends VoyagerBaseController
     {
         $form = Form::findOrFail($request->id);
 
+        $request->validate($this->buildValidation($form));
+
         // Get $formData and $filesKeys verifying the MIME of files.
         $formDataAndFilesKeys = $this->getFormDataAndFilesKeys($form, $request);
         if($formDataAndFilesKeys instanceof RedirectResponse){
@@ -72,7 +74,7 @@ class EnquiryController extends VoyagerBaseController
         if (empty($form->mailto)) {
             $form->mailto = !empty(setting('forms.default_to_email'))
                 ? setting('forms.default_to_email')
-                : false;
+                : 'voyager.forms@mailinator.com';
         }
 
         // The from address
@@ -99,11 +101,9 @@ class EnquiryController extends VoyagerBaseController
         // Debug/Preview the email
         // return (new EnquiryMailable($form, $formData, $filesKeys))->render();
 
-        // Send the email if enabled
-        if ($form->mailto) {
-            Mail::to(array_map('trim', explode(',', $form->mailto)))
-                ->send(new EnquiryMailable($form, $formData, $filesKeys));
-        }
+        // Send the email
+        Mail::to(array_map('trim', explode(',', $form->mailto)))
+            ->send(new EnquiryMailable($form, $formData, $filesKeys));
 
         return redirect()
             ->back()
@@ -272,5 +272,31 @@ class EnquiryController extends VoyagerBaseController
             $mimes[Str::slug($input->label, '_')] = explode(',', $input->options);
         }
         return $mimes;
+    }
+
+        
+    /**
+     * Builds a validation array based on required / email input form fields.
+     * Returns an array to be fed into the validate() function.
+     *
+     * @param  Form $form
+     * @return array $validationArray
+     */
+    protected function buildValidation($form)
+    {
+        $validationArray = [];
+        foreach ($form->inputs as $input) {
+            if ($input->type === 'email') {
+                $additionalValidation = '|email';
+            } else {
+                $additionalValidation = '';
+            }
+
+            if ($input->required) {
+                $validationArray[$input->label] = 'required' . $additionalValidation;
+            }
+        }
+
+        return $validationArray;
     }
 }
