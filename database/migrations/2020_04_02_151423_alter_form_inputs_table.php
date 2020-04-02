@@ -14,7 +14,7 @@ class AlterFormInputsTable extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE form_inputs CHANGE COLUMN `type` values ENUM('text', 'number', 'email', 'text_area', 'checkbox', 'select', 'radio', 'file', 'submit') NOT NULL");
+        DB::statement("ALTER TABLE form_inputs CHANGE COLUMN `type` `type` ENUM('text', 'number', 'email', 'text_area', 'checkbox', 'select', 'radio', 'file', 'submit') NOT NULL");
     }
 
     /**
@@ -24,6 +24,6 @@ class AlterFormInputsTable extends Migration
      */
     public function down()
     {
-        DB::statement("ALTER TABLE form_inputs CHANGE COLUMN `type` values ENUM('text', 'number', 'email', 'text_area', 'checkbox', 'select', 'radio', 'file') NOT NULL");
+        DB::statement("ALTER TABLE form_inputs CHANGE COLUMN `type` `type` ENUM('text', 'number', 'email', 'text_area', 'checkbox', 'select', 'radio', 'file') NOT NULL");
     }
 }
