@@ -70,9 +70,19 @@
             data-sitekey="{{ setting('admin.google_recaptcha_site_key') }}"
             data-callback="onSubmit" onclick="setFormId('{{ $form->title }}')"
         >
-            Submit
+            @if($input->type === 'submit') 
+                {{$input->label}}
+            @else
+                Submit
+            @endif
         </button>
     @else
-        <button class="button" id="submit" type="submit" value="submit">Submit</button>
+        <button class="button" id="submit" type="submit" value="submit">
+            @if($input->type === 'submit') 
+                {{$input->label}}
+            @else
+                Submit
+            @endif
+        </button>
     @endif
 </form>
