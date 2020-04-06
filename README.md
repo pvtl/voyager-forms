@@ -89,3 +89,17 @@ This module sends a generic looking email with each submission. However you have
 
 - Create a new blade template in `views/vendor/voyager-forms/email-templates` (you can also simply override `default.blade.php` in the same location)
 - Edit the form in Voyager Admin and select the appropriate email template
+
+---
+
+## Using Input Types
+
+Most of the input types are fairly self-explanatory. Two non-standard fields are the submit and group fields. Here's how to use them:
+
+#### Group
+You can group your form fields by using two group fields. The label of the first group field will be the title of your grouped fields. You can add your custom css class which will be added to both the grouped field title span and the grouped field div that encapsulates the fields just like any other form element. The default respective classes are .groupedInput and .groupedInputTitle. Because the package doesn't come with any CSS, we encourage you to style both of these classes in your application.
+
+You will need to create a 'group' field in the form builder both where you want your grouped fields to start, and end. If you are missing a closing group field it will be closed at the end of your form automatically. 
+
+#### Submit 
+You can customize the submit button's text and CSS of your form with the submit input field. You should put this at the end of your form builder. 

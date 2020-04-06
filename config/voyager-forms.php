@@ -20,5 +20,6 @@ return [
         'radio' => 'Radio',
         'file' => 'File',
         'submit' => 'Submit',
+        'group' => 'Group',
     ],
 ];
