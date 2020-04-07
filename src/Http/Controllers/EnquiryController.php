@@ -293,7 +293,7 @@ class EnquiryController extends VoyagerBaseController
             }
 
             if ($input->required) {
-                $validationArray[$input->label] = 'required' . $additionalValidation;
+                $validationArray[str_replace(' ', '_', $input->label)] = 'required' . $additionalValidation;
             }
         }
 
