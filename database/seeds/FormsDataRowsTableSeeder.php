@@ -16,6 +16,12 @@ class FormsDataRowsTableSeeder extends Seeder
         'enquiries',
     ];
 
+    protected $dataRowExcludes = [
+        'id',
+        'data',
+        'files_keys',
+    ];
+
     /**
      * Auto generated seed file.
      *
@@ -40,7 +46,7 @@ class FormsDataRowsTableSeeder extends Seeder
         foreach ($columns as $key => $value) {
             $dataRow = DataRow::firstOrNew(['data_type_id' => $dataType->id, 'field' => $value]);
 
-            if (!$dataRow->exists && $value !== 'id' && $value !== 'data' && $value !== 'files_keys') {
+            if (!$dataRow->exists && !in_array($value, $this->dataRowExcludes, true)) {
                 $dataRow->fill([
                     'type' => 'text',
                     'display_name' => $value,
@@ -48,6 +54,19 @@ class FormsDataRowsTableSeeder extends Seeder
                     'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '',
+                    'order' => $key,
+                ])->save();
+            } elseif (!$dataRow->exists && in_array($value, $this->dataRowExcludes, true)) {
+                $dataRow->fill([
+                    'type' => 'text',
+                    'display_name' => $value,
+                    'required' => 0,
+                    'browse' => 0,
+                    'read' => 1,
+                    'edit' => 0,
                     'add' => 1,
                     'delete' => 1,
                     'details' => '',
