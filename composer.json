@@ -17,9 +17,9 @@
         }
     ],
     "require": {
-        "pvtl/voyager-frontend": "^0.9",
+        "pvtl/voyager-frontend": "^0.9|^1.0",
         "tcg/voyager": "^1.1",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0|~7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5"
