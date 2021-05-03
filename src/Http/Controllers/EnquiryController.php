@@ -204,7 +204,6 @@ class EnquiryController extends VoyagerBaseController
 
     }
 
-
     /**
      * Verify the reCAPTCHA response with Google
      * @param Request $request
@@ -215,12 +214,14 @@ class EnquiryController extends VoyagerBaseController
         $client = new \GuzzleHttp\Client();
         $guzzleRequest = new \GuzzleHttp\Psr7\Request('POST', 'https://www.google.com/recaptcha/api/siteverify');
         $response = $client->send($guzzleRequest, [
-            'secret' => setting('admin.google_recaptcha_secret_key'),
-            'response' => $request->input('g-recaptcha-response'),
-            'remoteip' => $_SERVER['REMOTE_ADDR'],
+            'form_params' => [
+                'secret' => setting('admin.google_recaptcha_secret_key'),
+                'response' => $request->input('g-recaptcha-response'),
+                'remoteip' => $_SERVER['REMOTE_ADDR'],
+            ],
         ]);
 
-        if ($response->getStatusCode() !== 200) {
+        if ($response->getStatusCode() !== 200 || !json_decode($response->getBody()->getContents(), true)['success']) {
             return redirect()
                 ->back()
                 ->with('error', 'Unable to validate Google reCAPTCHA');
