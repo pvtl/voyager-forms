@@ -62,7 +62,10 @@ class EnquiryController extends VoyagerBaseController
 
         // Check if reCAPTCHA is on & verify
         if (setting('admin.google_recaptcha_site_key')) {
-            $this->verifyCaptcha($request);
+            $verify = $this->verifyCaptcha($request);
+            if ($verify !== false) {
+                return $verify;
+            }
         }
 
         // Execute the hook
@@ -226,6 +229,8 @@ class EnquiryController extends VoyagerBaseController
                 ->back()
                 ->with('error', 'Unable to validate Google reCAPTCHA');
         }
+
+        return false;
     }
 
     /**
@@ -275,7 +280,6 @@ class EnquiryController extends VoyagerBaseController
         return $mimes;
     }
 
-        
     /**
      * Builds a validation array based on required / email input form fields.
      * Returns an array to be fed into the validate() function.
